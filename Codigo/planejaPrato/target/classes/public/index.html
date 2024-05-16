@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Planeja Prato</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+  <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,200;1,300;1,600&display=swap"
+    rel="stylesheet">
+  <link href="css/index.css" rel="stylesheet">
+</head>
+
+<body>
+  <header>
+
+    <!-- Fetch no header -->
+    <div id="headerCopy"></div>
+
+  </header>
+  <main>
+
+    <!-- Primeira parte, onde tem um botão para cadastrar nova receita -->
+    <div class="firstStage">
+      <div class="featureText">
+
+        <p class="h3">Sua Receita</p>
+        <h1 class="display-1">Planeja Prato</h1>
+        <p class="h4">Em sua casa</p>
+        <button type="button" data-bs-toggle="modal" data-bs-target="#createRecipeModal" class="btn btn-light"
+          style="margin-top: 3vh; font-size: 18px;">Cadastre sua Receita</button>
+
+        <div id="createRecipeCopy"></div>
+
+      </div>
+    </div>
+
+
+
+    <!-- Segunta parte, onte tem uma imagem e um texto About Us -->
+    <div class="secondStage" style="padding-top: 4vh;">
+      <div class="firstBoxFormat">
+
+        <h1 class="display-1" style="text-align: center; padding: 2vh">About Us</h1>
+
+        <div class="container px-4 text-center">
+          <div class="row gx-5">
+            <div class="col-md">
+              <div class="p-3">
+                <img src="img/aboutUs.jpg" alt="AboutUsImg" class="img-fluid rounded"
+                  style="height: auto; width: auto;">
+              </div>
+            </div>
+            <div class="col-md">
+              <div class="p-3">Welcome to our recipe website, where culinary inspiration meets delicious creations!
+                Whether you're a seasoned chef or a passionate home cook, we are here to ignite your taste buds and
+                guide you on a delightful culinary journey. Our extensive collection of recipes covers a wide range of
+                cuisines, from comforting classics to innovative fusion dishes. Each recipe is thoughtfully crafted,
+                tested, and presented with step-by-step instructions, ensuring that even the novice cook can create
+                extraordinary meals. We believe that cooking is an art form that brings people together, and our goal is
+                to empower you to explore your culinary creativity and make every meal a masterpiece. So come on in,
+                explore our diverse recipe collection, and let's embark on a delightful gastronomic adventure together!
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+
+    <!-- Terceira parte onde tem 4 destaques de receita -->
+    <div class="thirdStage" style="padding-top: 4vh;">
+      <div class="secondBoxFormat">
+
+        <h1 class="display-1" style="text-align: center; padding: 2vh;">Feature Recipes</h1>
+
+        <!-- Div com as caixas para feature recipess -->
+        <div class="recipe">
+          <div class="box">
+            <div class="card">
+
+              <!-- Imagem de cada caixa de Destaques, texto e Botao para abrir o modal recipeModal -->
+              <img src="img/r1.png" alt="">
+              <div class="content">
+                <h3>Recipe 1</h3>
+                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
+                <button data-bs-toggle="modal" data-bs-target="#recipeModal">View Recipe</button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="img/r2.png" alt="">
+              <div class="content">
+                <h3>Recipe 2</h3>
+                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
+                <button>View Recipe</button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="img/r3.png" alt="">
+              <div class="content">
+                <h3>Recipe 3</h3>
+                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
+                <button>View Recipe</button>
+              </div>
+            </div>
+            <div class="card">
+              <img src="img/r4.png" alt="">
+              <div class="content">
+                <h3>Recipe 4</h3>
+                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
+                <button>View Recipe</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- HTML do modal que abre ao clicar em View Recipe -->
+        <div id="recipeModalCopy"></div>
+
+      </div>
+    </div>
+
+
+    <!-- Quarta parte onde tem 4 caixas com imagens sobre categorias -->
+    <div class="fourthStage" style="padding-top: 4vh;">
+      <div class="thirdBoxFormat">
+
+        <h1 class="display-1" style="text-align: center; padding: 2vh;">Categories</h1>
+
+        <!-- div com as caixas categories -->
+        <div class="categories">
+          <div class="box">
+            <div class="ca-card">
+
+              <!-- Imagens redondas com texto dentro, para Categorias, Botão sem ação ainda -->
+              <img src="img/maincourse.png" alt="">
+              <div class="content">
+                <h3>Main Courses</h3>
+                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
+                <button>Read More</button>
+              </div>
+            </div>
+            <div class="ca-card">
+              <img src="img/desserts.png" alt="">
+              <div class="content">
+                <h3>Desserts</h3>
+                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
+                <button>Read More</button>
+              </div>
+            </div>
+            <div class="ca-card">
+              <img src="img/healthyeats.png" alt="">
+              <div class="content">
+                <h3>Healthy Eats</h3>
+                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
+                <button>Read More</button>
+              </div>
+            </div>
+            <div class="ca-card">
+              <img src="img/baking.png" alt="">
+              <div class="content">
+                <h3>Baking</h3>
+                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
+                <button>Read More</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+  <footer>
+
+    <!-- Fetch do footer -->
+    <div id="footerCopy"></div>
+
+  </footer>
+
+  <script src="js/scriptFetch.js"></script>
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+    crossorigin="anonymous"></script>
+</body>
+
+</html>

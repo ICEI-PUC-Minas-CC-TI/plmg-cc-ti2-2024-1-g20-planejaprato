@@ -1,0 +1,100 @@
+<div class="modal fade" id="recipeModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+
+          <!-- Titulo da receita -->
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Bolo de cenoura</h1>
+
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+
+          <!-- Ingredientes e preços -->
+          <h1 class="display-5" style="text-align: center; padding: 2vh;">Ingredientes</h1>
+          <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Ingrediente</th>
+                <th scope="col">Quantidade</th>
+                <th scope="col">Preço</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <th scope="row">1</th>
+                <td>Cenoura</td>
+                <td>2</td>
+                <td>3,25 R$/Kg</td>
+              </tr>
+              <tr>
+                <th scope="row">2</th>
+                <td>Ovo</td>
+                <td>4</td>
+                <td>8,26 R$/Dúzia</td>
+              </tr>
+              <tr>
+                <th scope="row">3</th>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+              </tr>
+              <tr>
+                <th scope="row">4</th>
+                <td>...</td>
+                <td>...</td>
+                <td>...</td>
+              </tr>
+            </tbody>
+          </table>
+
+          <!-- Passo a passo da receita separada em caixas marcaveis / Label -->
+          <h1 class="display-5" style="text-align: center; padding: 2vh;">Receita</h1>
+          <ul class="list-group">
+            <li class="list-group-item">
+              <input class="form-check-input me-1" style="transform: scale(1.2);" type="checkbox" value="">
+              <label class="form-check-label .stretched-link">1. Em um liquidificador, bata as cenouras, a margarina e
+                os ovos.</label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" style="transform: scale(1.2);" type="checkbox" value="">
+              <label class="form-check-label .stretched-link">2. Em um recipiente, coloque o creme de cenouras e
+                adicione o açúcar e a farinha peneirados e misture bem.</label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" style="transform: scale(1.2);" type="checkbox" value="">
+              <label class="form-check-label .stretched-link">3. Junte o fermento e misture um pouco mais. </label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" style="transform: scale(1.2);" type="checkbox" value="">
+              <label class="form-check-label .stretched-link">4. Despeje a massa em uma forma de furo no meio, untada e
+                enfarinhada, e leve para assar em forno médio por, aproximadamente, 45 minutos. </label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" style="transform: scale(1.2);" type="checkbox" value="">
+              <label class="form-check-label .stretched-link">5. Em uma panela, coloque todos os ingredientes da
+                cobertura e cozinhe, misturando continuamente, até que forme uma cobertura lisa. </label>
+            </li>
+            <li class="list-group-item">
+              <input class="form-check-input me-1" style="transform: scale(1.2);" type="checkbox" value="">
+              <label class="form-check-label .stretched-link">6. Desenforme o bolo e cubra com a cobertura. Sirva.
+              </label>
+            </li>
+          </ul>
+        </div>
+        <div class="modal-footer">
+
+          <!-- Botão para deixar como favorita -->
+          <input type="checkbox" class="btn-check" name="options-outlined" id="success-outlined" autocomplete="off">
+          <label class="btn btn-outline-success" for="success-outlined">Favoritar Receita</label>
+
+          <!-- Botão para comprar ou cancelar -->
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Buy</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
