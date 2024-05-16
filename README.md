@@ -1,17 +1,18 @@
-# [Nome do projeto]
+# [PlanejaPrato]
 
 [Escreva um ou dois  parágrafo resumindo o objetivo do seu projeto.]
 
 ## Alunos integrantes da equipe
 
-* [Nome completo do aluno 1]
-* [Nome completo do aluno 2]
-* [Nome completo do aluno 3]
-* [Nome completo do aluno 4]
+* [Edson Pimenta Almeida]
+* [Eduardo Nunes]
+* [Luis Augusto Staling Toledo]
+* [Samuel ALves ]
+* [Rafael Lima]
 
 ## Professores responsáveis
 
-* [Nome completo do professor 1]
+* [Vladimir]
 * [Nome completo do professor 2]
 
 ## Instruções de utilização
