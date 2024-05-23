@@ -8,7 +8,7 @@ public class DAO {
 	public DAO() {
 		conexao = null;
 	}
-	
+	// conecta com o banco de dados sql (a tabela deve estar em minusculo, senha: edson, username: postgres)
 	public boolean conectar() {
 		String driverName = "org.postgresql.Driver";                    
 		String serverName = "localhost";
@@ -24,6 +24,18 @@ public class DAO {
 			conexao = DriverManager.getConnection(url, username, password);
 			status = (conexao == null);
 			System.out.println("Conexão efetuada com o postgres!");
+			// Codigo para printar no console, todas as tabelas encontradas no SQL
+			Class.forName(driverName);
+            Connection conexao = DriverManager.getConnection(url, username, password);
+            DatabaseMetaData metaData = conexao.getMetaData();
+            ResultSet tables = metaData.getTables(null, null, null, new String[]{"TABLE"});
+
+            System.out.println("Tabelas encontradas:");
+            while (tables.next()) {
+                String tableName = tables.getString("TABLE_NAME");
+                System.out.println(tableName);
+            }
+
 		} catch (ClassNotFoundException e) { 
 			System.err.println("Conexão NÃO efetuada com o postgres -- Driver não encontrado -- " + e.getMessage());
 		} catch (SQLException e) {
@@ -33,6 +45,7 @@ public class DAO {
 		return status;
 	}
 	
+	//fechar conexao com bd
 	public boolean close() {
 		boolean status = false;
 		

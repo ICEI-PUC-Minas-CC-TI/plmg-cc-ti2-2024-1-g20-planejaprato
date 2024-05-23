@@ -14,6 +14,7 @@ import model.Receita;
 
 
 public class ReceitaDAO extends DAO {
+	//conexao com bd	
 	public ReceitaDAO() {
 		super();
 		conectar();
@@ -22,6 +23,7 @@ public class ReceitaDAO extends DAO {
 	public void finalize() {
 		close();
 	}
+//	localhost -> nome do servidor, postgres -> nome da base de dados
     String url = "jdbc:postgresql://localhost:5432/postgres"; 
     String usuario = "postgres";
     String senha = "edson";
@@ -39,6 +41,7 @@ public class ReceitaDAO extends DAO {
             e.printStackTrace();
         }
     }
+    //atualizar bd
     public boolean update(Receita receita) {
 		boolean status = false;
 		try {  
@@ -57,7 +60,7 @@ public class ReceitaDAO extends DAO {
 		return status;
 	}
 	
-	
+//	deletar receitas
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  
@@ -70,21 +73,27 @@ public class ReceitaDAO extends DAO {
 		}
 		return status;
 	}
+	
     // retorna todas as receitas
-	/*
-	 * public List<Receita> getTodasReceitas() { List<Receita> listReceitas = new
-	 * ArrayList<>(); try (Connection connection = DriverManager.getConnection(url,
-	 * usuario, senha)) { String sql = "SELECT * FROM Receita"; PreparedStatement
-	 * preparedStatement = connection.prepareStatement(sql); ResultSet resultSet =
-	 * preparedStatement.executeQuery();
-	 * 
-	 * while (resultSet.next()) { Receita receita = new Receita();
-	 * receita.setId(resultSet.getInt("id"));
-	 * receita.setNome(resultSet.getString("nome"));
-	 * receita.setIngredientes(resultSet.getString("ingredientes"));
-	 * receita.setModoDePreparo(resultSet.getString("modoDePreparo"));
-	 * listReceitas.add(receita); } } catch (SQLException e) { e.printStackTrace();
-	 * } return listReceitas; }
-	 */
+	public List<Receita> getTodasReceitas() { 
+		List<Receita> listReceitas = new ArrayList<>(); 
+		try (Connection connection = DriverManager.getConnection(url,usuario, senha)) {
+			String sql = "SELECT * FROM Receita";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+	  
+			while (resultSet.next()) { 
+			Receita receita = new Receita();
+			receita.setNome(resultSet.getString("nome"));
+			receita.setIngredientes(resultSet.getString("ingredientes"));
+			receita.setModoDePreparo(resultSet.getString("modoDePreparo"));
+			listReceitas.add(receita); 
+			} 
+		}catch (SQLException e) { 
+			e.printStackTrace();
+	  } 
+		return listReceitas; 
+	}
+	 
 
 }
