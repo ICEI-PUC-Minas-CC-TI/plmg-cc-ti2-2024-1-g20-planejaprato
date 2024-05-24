@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -60,7 +59,7 @@ public class ReceitaDAO extends DAO {
 		return status;
 	}
 	
-//	deletar receitas
+    //	deletar receitas
 	public boolean delete(int id) {
 		boolean status = false;
 		try {  

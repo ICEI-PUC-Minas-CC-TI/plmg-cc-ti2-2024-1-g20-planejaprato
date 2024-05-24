@@ -54,3 +54,8 @@ main .thirdStage{
 main .secondBoxFormat {
     font-family: 'Josefin Sans', sans-serif;
 }
+.grid-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

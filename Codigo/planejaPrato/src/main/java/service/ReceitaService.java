@@ -36,7 +36,112 @@ public class ReceitaService {
             System.out.println("--------------------------");
         }
     }
+    
+    //adiciona receitas do bd para o front end yourRecipes
+    public String replaceYourRecipes(String html) {
+    	String receita = new String();
+    	String novaDiv = new String();
+    	List<Receita> todasReceitas = retornarTodasReceitas();
+    	
+    	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
+             // Criar a string com a Div
+             receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
+             		+ "<img src=\"img/r8.png\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
+             		+ "<div class=\"card-body\">\r\n"
+             		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
+             		+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
+             		+ "<button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">View Recipe</button>\r\n"
+             		+ "</div>\r\n"
+             		+ "</div>";
+             
+             // Editar a receita
+             receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
+             receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
+             
+             // Concatenar varias Divs
+             novaDiv = novaDiv + receita;
+             }
+             
+             // Editar o front end com o Java
+             html = html.replace("<CaixaSuasReceitas>", novaDiv);
+             
+             // Retorna a string com o HTML
+             return html;
+    }
+    // alterar features pelas receitas do bd
+    public String replaceFeatures(String html) {
+    	String receita = new String();
+    	String novaDiv = new String();
+    	List<Receita> todasReceitas = retornarTodasReceitas();
+    	
+    	//
+    	int loop = todasReceitas.size();
+    	loop = loop > 10 ? 10 : loop;
+    	loop--;
+    	// loop para retornar as 10 ultimas receitas
+    	int pos = todasReceitas.size() - 1;
+    	while ( loop >= 0 ) {
+    		// codigo
+    		receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
+    				+ "<img src=\"img/r8.png\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
+    				+ "<div class=\"card-body\">\r\n"
+    				+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
+    				+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
+    				+ "<button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">View Recipe</button>\r\n"
+    				+ "</div>\r\n"
+    				+ "</div>";
+    		
+    		// Editar a receita
+    		receita = receita.replace("Nome da receita", todasReceitas.get(pos).getNome());
+    		receita = receita.replace("Seu modo de preparo", todasReceitas.get(pos).getModoDePreparo());
+    		
+    		// Concatenar varias Divs
+    		novaDiv = novaDiv + receita;
+    	  		
+    		loop--;
+    		pos--;
+    	}
+            
+             // Editar o front end com o Java
+             html = html.replace("<CaixaSuasReceitas>", novaDiv);
+             
+             // Retorna a string com o HTML
+             return html;
+    }
 
+  
 
+	public String pesquisaReceita(String html,String nome) {
+		String receita = new String();
+		String novaDiv = new String();
+		List<Receita> todasReceitas = retornarTodasReceitas();
+
+		//
+		
+   	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
+			// codigo
+			receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
+					+ "<img src=\"img/r8.png\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
+					+ "<div class=\"card-body\">\r\n" + "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
+					+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
+					+ "<button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">View Recipe</button>\r\n"
+					+ "</div>\r\n" + "</div>";
+
+			// Editar a receita
+			if(nome == todasReceitas.get(i).getNome())
+			receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
+			receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
+
+			// Concatenar varias Divs
+			novaDiv = novaDiv + receita;
+
+		}
+
+		// Editar o front end com o Java
+		html = html.replace("<CaixaSuasReceitas>", novaDiv);
+
+		// Retorna a string com o HTML
+		return html;
+	}
 
 }  
