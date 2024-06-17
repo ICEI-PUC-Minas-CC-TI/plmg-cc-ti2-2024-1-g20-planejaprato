@@ -30,7 +30,7 @@
       <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
         <li><a href="index.html" class="nav-link px-2">Home</a></li>
         <form action="/features" method="get" id="recipeForm">
-          <button type="submit" class="nav-link px-2">Features</button>
+          <button type="submit" class="nav-link px-2">Pesquisar</button>
         </form>
 
         <!-- <li><a href="featureRecipes.html" class="nav-link px-2">Features</a></li> -->
@@ -99,10 +99,11 @@
 
           <!-- text box -->
           <div class="textBox" style="margin-top: 8vh; text-align: center;">
-            <input class="form-control form-control-lg" type="text" placeholder="Pesquise Sua Receita"
-              aria-label=".form-control-lg example" style="max-width: 80vh; margin: 0 auto;">
+            <form action="/pesquisar-receita" method="post" id="searchForm">
+              <input class="form-control form-control-lg" type="text" placeholder="Pesquise Sua Receita"
+                aria-label=".form-control-lg example" style="max-width: 80vh; margin: 0 auto;" name="pesquisa">
+            </form>
           </div>
-
 
         </div>
 
@@ -114,11 +115,16 @@
 
 
 
-      <!-- Receitas Destaques -->
-      <div class="secondStage" style="padding-top: 6vh;">
+       <!-- Receitas Destaques -->
+       <div class="secondStage" style="padding-top: 6vh;">
         <div class="firstBoxFormat">
 
           <h1 class="display-1" style="text-align: center;">Receitas em Destaque!</h1>
+          <div class="grid-container" style="margin-top: 2vh;">
+
+            <DestaquesReceitas>
+
+          </div>
 
         </div>
       </div>
@@ -128,9 +134,11 @@
       <div class="thirdStage" style="padding-top: 4vh;">
         <div class="secondBoxFormat" style="margin: 0 2vh 0 2vh;">
           <h1 class="display-1" style="text-align: center;">Novidades</h1>
-            <div class="grid-container" style="margin-top: 2vh;">
-              <CaixaSuasReceitas>
-            </div>
+          <div class="grid-container" style="margin-top: 2vh;">
+
+            <CaixaNovasReceitas>
+
+          </div>
         </div>
       </div>
 
@@ -138,8 +146,20 @@
   </main>
   <footer>
 
-    <!-- Fetch do footer -->
-    <div id="footerCopy"></div>
+    <div class="container py-3 my-4 border-top">
+      <div class="row d-flex flex-wrap justify-content-between align-items-center">
+        <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
+    
+        <ul class="nav col-md-4 justify-content-end">
+          <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
+          <form action="/features" method="get" id="recipeForm">
+            <button type="submit" class="nav-link px-2 text-body-secondary">Pesquisar</button>
+          </form>
+    
+          <!-- <li class="nav-item"><a href="featureRecipes.html" class="nav-link px-2 text-body-secondary">Features</a></li> -->
+        </ul>
+      </div>
+    </div>
 
   </footer>
 

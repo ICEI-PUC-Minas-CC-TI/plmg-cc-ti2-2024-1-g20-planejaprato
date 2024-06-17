@@ -7,7 +7,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import org.json.JSONObject;
 
 public class OpenAIClient {
-    private final String apiKey = "minha apiKey";
+    private final String apiKey = "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";
     private final HttpClient httpClient = HttpClient.newHttpClient();
     
     public String createImages(String text) {
@@ -31,6 +31,7 @@ public class OpenAIClient {
             JSONObject jsonResponse = new JSONObject(response.body());
             imageUrl = jsonResponse.getJSONArray("data").getJSONObject(0).getString("url");
 
+     
             // Download da imagem usando a URL e salvá-la localmente
             URI imageUri = URI.create(imageUrl);
             HttpRequest imageRequest = HttpRequest.newBuilder()
@@ -66,10 +67,12 @@ public class OpenAIClient {
             } else {
                 System.out.println("Erro ao salvar imagem: Código de resposta HTTP " + imageResponse.statusCode());
             }
-
+			
+			
         } catch (IOException | InterruptedException e) {
             e.printStackTrace();
         }
+        
         System.out.println(imageUrl);
         return nome;
     }

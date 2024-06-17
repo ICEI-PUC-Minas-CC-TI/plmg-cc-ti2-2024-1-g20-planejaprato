@@ -36,7 +36,7 @@
           <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
             <li><a href="index.html" class="nav-link px-2">Home</a></li>
             <form action="/features" method="get" id="recipeForm">
-              <button type="submit" class="nav-link px-2">Features</button>
+              <button type="submit" class="nav-link px-2">Pesquisar</button>
             </form>
             <!-- <li><a href="featureRecipes.html" class="nav-link px-2">Features</a></li> -->
             <form action="/yourRecipes" method="get" id="recipeForm">
@@ -167,16 +167,31 @@
   </main>
   <footer>
 
-    <!-- Fetch do footer -->
-    <div id="footerCopy"></div>
+    <div class="container py-3 my-4 border-top">
+      <div class="row d-flex flex-wrap justify-content-between align-items-center">
+        <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
+    
+        <ul class="nav col-md-4 justify-content-end">
+          <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
+          <form action="/features" method="get" id="recipeForm">
+            <button type="submit" class="nav-link px-2 text-body-secondary">Pesquisar</button>
+          </form>
+    
+          <!-- <li class="nav-item"><a href="featureRecipes.html" class="nav-link px-2 text-body-secondary">Features</a></li> -->
+        </ul>
+      </div>
+    </div>
 
   </footer>
 
   <script src="js/scriptFetch.js"></script>
+  <script src="js/scriptCart.js"></script>
+  <script src="js/rolagemSuave.js"></script>
+
+  
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-    <script src="js/scriptCart.js"></script>
     <script src="js/modalReceipes.js"></script>
 
 </body>

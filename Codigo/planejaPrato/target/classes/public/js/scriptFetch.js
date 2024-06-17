@@ -20,19 +20,10 @@ window.onload = function () {
             document.getElementById('footerCopy').innerHTML = data;
         });
 
-    fetch('../recipeModal.html')
+    fetch('../index.html')
         .then(response => response.text())
         .then(data => {
-            document.getElementById('recipeModalCopy').innerHTML = data;
+            document.getElementById('indexCopy').innerHTML = data;
         });
 
-        fetch('../index.html')
-        .then(response => response.text())
-        .then(data => {
-        document.getElementById('indexCopy').innerHTML = data;
-        });
-
-
-
-        
 }

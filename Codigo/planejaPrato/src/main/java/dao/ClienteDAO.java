@@ -20,18 +20,23 @@ public class ClienteDAO extends DAO {
         close();
     }
 
-    String url = "jdbc:postgresql://localhost:5432/postgres";
+    String url = "jdbc:postgresql://localhost:5432/PlanejaPrato";
     String usuario = "postgres";
-    String senha = "edson";
+    String senha = "luissql";
 
     public void cadastrarCliente(Cliente cliente) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "INSERT INTO Cliente ( nome, email, endereco, telefone, senha, cidade, cep) VALUES (?, ?, ?, ?, ? , ? , ?)";
+            String sql = "INSERT INTO cliente ( email, endereco, telefone, senha, cidade, cep, nome) VALUES (?, ?, ?, ?, ? , ? , ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, cliente.getNome());
+            preparedStatement.setString(1, cliente.getEmail());
             preparedStatement.setString(2, cliente.getEndereco());
-            preparedStatement.setString(3, cliente.getEmail());
-            preparedStatement.setString(4, cliente.getNumeroTelefone());
+            preparedStatement.setString(3, cliente.getNumeroTelefone());
+            preparedStatement.setString(4, cliente.getSenha());
+            preparedStatement.setString(5, cliente.getCidade());
+            preparedStatement.setString(6, cliente.getCep());
+            preparedStatement.setString(7, cliente.getNome());
+
+
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -49,10 +54,14 @@ public class ClienteDAO extends DAO {
             while (resultSet.next()) {
                 Cliente cliente = new Cliente();
                 cliente.setIdCliente(resultSet.getInt("idCliente"));
-                cliente.setNome(resultSet.getString("nome"));
                 cliente.setEndereco(resultSet.getString("endereco"));
                 cliente.setEmail(resultSet.getString("email"));
-                cliente.setNumeroTelefone(resultSet.getString("numeroTelefone"));
+                cliente.setNumeroTelefone(resultSet.getString("telefone"));
+                cliente.setSenha(resultSet.getString("senha"));
+                cliente.setCidade(resultSet.getString("cidade"));
+                cliente.setCep(resultSet.getString("cep"));
+                cliente.setNome(resultSet.getString("nome"));
+
                 clientes.add(cliente);
             }
         } catch (SQLException e) {

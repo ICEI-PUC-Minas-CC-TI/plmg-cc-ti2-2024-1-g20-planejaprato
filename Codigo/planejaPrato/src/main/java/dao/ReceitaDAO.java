@@ -22,10 +22,12 @@ public class ReceitaDAO extends DAO {
 	public void finalize() {
 		close();
 	}
+	
 //	localhost -> nome do servidor, postgres -> nome da base de dados
-    String url = "jdbc:postgresql://localhost:5432/postgres"; 
+    String url = "jdbc:postgresql://localhost:5432/PlanejaPrato";
     String usuario = "postgres";
-    String senha = "edson";
+    String senha = "luissql";
+    
     public void cadastrarReceita(String nome,String ingredientes,String modoDePreparo,String imagem) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
             String sql = "INSERT INTO Receita (nome, ingredientes, modoDePreparo, imagem) VALUES (?, ?, ?, ?)";

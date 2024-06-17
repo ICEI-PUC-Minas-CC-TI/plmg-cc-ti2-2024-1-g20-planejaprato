@@ -1,5 +1,4 @@
-/META-INF/
 /app/
-/service/
-/model/
 /dao/
+/model/
+/service/

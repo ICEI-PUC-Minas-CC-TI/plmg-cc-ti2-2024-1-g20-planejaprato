@@ -3,10 +3,22 @@ package model;
 public class Receita {
 		
 	    public String nomeReceita;
-	    public String ingredientes,modoDePreparo;
+	    public String ingredientes;
+	    public String modoDePreparo;
 	    public String imagem;
 	    public int idReceita;
-
+	    
+	 // Construtor
+	    public Receita(String nomeReceita, String ingredientes, String modoDePreparo, String imagem) {
+	        this.nomeReceita = nomeReceita;
+	        this.ingredientes = ingredientes;
+	        this.modoDePreparo = modoDePreparo;
+	        this.imagem = imagem;
+	    }
+	    
+	    public Receita() {}
+	    
+	    // Gettes e Setters
 	    public void setNome(String nome) {
 	    	this.nomeReceita = nome;
 	    }

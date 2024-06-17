@@ -20,9 +20,9 @@ public class CarrinhoDAO extends DAO {
         close();
     }
 
-    String url = "jdbc:postgresql://localhost:5432/postgres";
+    String url = "jdbc:postgresql://localhost:5432/PlanejaPrato";
     String usuario = "postgres";
-    String senha = "edson";
+    String senha = "luissql";
 
     public void adicionarItem(Carrinho carrinho) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {

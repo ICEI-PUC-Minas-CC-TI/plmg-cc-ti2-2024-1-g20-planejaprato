@@ -18,8 +18,8 @@ import java.net.http.*;
 import org.json.JSONObject;
 
 public class Aplicacao {
+	// Instancias
     public static OpenAIClient client = new OpenAIClient();
-	// Gera uma instancia de ReceitaService
     public static ReceitaService receitaService = new ReceitaService();
     public static ClienteService clienteService = new ClienteService();
 
@@ -41,6 +41,23 @@ public class Aplicacao {
             res.redirect("index.html");
             return null;
         });
+        
+        // Clicar em Ver Receita
+        post("/ver-receita", (request, response) -> {
+            // Receber o nome da receita enviado pela solicitação POST
+            String nome = request.queryParams("recipeName");
+            
+            // Buscar a receita pelo nome
+            Receita receita = receitaService.procurarReceita(nome);
+
+            // Html para a pagina a ser redirecionado
+            html = htmlText("receita.html");
+            
+        	// Atualizar o HTML com o bd necessario
+            html = receitaService.replaceIngredientes(html, receita);
+            
+            return html;
+        });  
 
         // Rota para cadastrar uma receita via POST
         post("/cadastra-receita", (request, response) -> {
@@ -94,7 +111,7 @@ public class Aplicacao {
             telefone = telefone.toLowerCase();
             cidade = cidade.toLowerCase();
             cep = cep.toLowerCase();
-            
+            System.out.println("Nome: "+ nome +"\nEmail: " +email + "\nSenha: " + senha + "Endereco: "+endereco + "\nTelefone: "+ telefone + "\nCidade: "+cidade + "\nCep: "+cep);
             // Chama o serviço de cadastro de receita
             // Manda os parametros para a função cadastrarReceita de receitaService
             clienteService.cadastrarCliente(nome, senha, endereco, email, telefone, cidade, cep);          
@@ -105,28 +122,46 @@ public class Aplicacao {
             // Preencher a string aux com o conteudo do HTML
             html = htmlText("index.html");
             return html;
+        });
+        
+     // Pesquisar receita
+        post("/pesquisar-receita", (request, response) -> {
+        	// Receber o input do usuario
+        	String input = request.queryParams("pesquisa");
+        	input = input.toLowerCase();
+        	
+        	// Html para a pagina a ser redirecionado
+        	html = htmlText("featureRecipes.html");
+        	
+        	// Atualizar o HTML com o bd necessario
+            html = receitaService.replacePesquisaFeatureRecipes(html, input);
             
-           
+            // Retonar html com a pesquisa 
+        	return html;
         });
 
-
         
-        // ainda nao funciona
         // Rota para atualizar html yourRecipes com receitas do bd via GET 
         get("/yourRecipes", (request, response) -> {
             html = htmlText("yourRecipes.html");
             html = receitaService.replaceYourRecipes(html);
             return html;
         });
+        
+     // Ir para a pagina features, e atualizando as receitas novas
         get("/features", (request, response) -> {
+        	
+        	// Ler o html
             html = htmlText("featureRecipes.html");
-            html = receitaService.replaceFeatures(html);
+            
+            // Atualizar o HTML com o bd necessario
+            html = receitaService.replaceNewRecipes(html, 1);
+            
+            // Retornar o HTML editado
             return html;
         });
-
-		
-       
         
+       
     }
 
     
@@ -158,7 +193,5 @@ public class Aplicacao {
     	// Retonar a String contendo todo o HTML
     	return conteudo.toString();
     }
-    
-    
     
 }
