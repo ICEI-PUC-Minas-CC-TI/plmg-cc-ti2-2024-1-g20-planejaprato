@@ -7,7 +7,7 @@ import java.net.http.HttpResponse.BodyHandlers;
 import org.json.JSONObject;
 
 public class OpenAIClient {
-    private final String apiKey = "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";
+    private final String apiKey = "minha apiKey";
     private final HttpClient httpClient = HttpClient.newHttpClient();
     
     public String createImages(String text) {
