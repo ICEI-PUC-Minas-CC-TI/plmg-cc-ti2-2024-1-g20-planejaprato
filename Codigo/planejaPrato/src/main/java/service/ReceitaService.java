@@ -12,15 +12,16 @@ public class ReceitaService {
         receitaDAO = new ReceitaDAO(); 
     }
 
-    public void cadastraReceita(String nome, String modoDePreparo, String ingredientes) {
+    public void cadastraReceita(String nome, String modoDePreparo, String ingredientes,String img_url) {
         	// Cria um novo objeto Receita e seta os valores no construtor
             Receita receita = new Receita();
             receita.setNome(nome);
             receita.setIngredientes(ingredientes);
             receita.setModoDePreparo(modoDePreparo);
-            
-            
-            receitaDAO.cadastrarReceita(receita.getNome(),receita.getIngredientes(),receita.getModoDePreparo());
+            receita.setImagem(img_url);
+          
+ 
+            receitaDAO.cadastrarReceita(receita.getNome(),receita.getIngredientes(),receita.getModoDePreparo(),receita.getImagem());
     }
     // Apenas chamar a função que esta na DAO, para retornar a lista e acessar na Aplicação
     public List<Receita> retornarTodasReceitas(){
@@ -33,6 +34,8 @@ public class ReceitaService {
             System.out.println("Nome da receita: " + receita.getNome());
             System.out.println("Ingredientes: " + receita.getIngredientes());
             System.out.println("Modo de preparo: " + receita.getModoDePreparo());
+            System.out.println("Url da imagem: " + receita.getImagem());
+
             System.out.println("--------------------------");
         }
     }
@@ -45,15 +48,13 @@ public class ReceitaService {
     	
     	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
              // Criar a string com a Div
-             receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
-             		+ "<img src=\"img/r8.png\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
-             		+ "<div class=\"card-body\">\r\n"
-             		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-             		+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
-             		+ "<button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">View Recipe</button>\r\n"
-             		+ "</div>\r\n"
-             		+ "</div>";
-             
+    		    receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
+    		    		+ "<img src=\"img/"+ todasReceitas.get(i).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"    		            + "<div class=\"card-body\">\r\n"
+    		            + "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
+    		            + "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
+    		            + "<button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">View Recipe</button>\r\n"
+    		            + "</div>\r\n"
+    		            + "</div>";
              // Editar a receita
              receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
              receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
@@ -83,7 +84,7 @@ public class ReceitaService {
     	while ( loop >= 0 ) {
     		// codigo
     		receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
-    				+ "<img src=\"img/r8.png\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
+            		+ "<img src=\"img/"+ todasReceitas.get(pos).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
     				+ "<div class=\"card-body\">\r\n"
     				+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
     				+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
@@ -121,7 +122,7 @@ public class ReceitaService {
    	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
 			// codigo
 			receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
-					+ "<img src=\"img/r8.png\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
+		            + "<img src=\"img/todasReceitas.get(i).imagem\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"
 					+ "<div class=\"card-body\">\r\n" + "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
 					+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n"
 					+ "<button class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">View Recipe</button>\r\n"

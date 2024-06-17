@@ -4,11 +4,16 @@ public class Receita {
 		
 	    public String nomeReceita;
 	    public String ingredientes,modoDePreparo;
+	    public String imagem;
 	    public int idReceita;
 
 	    public void setNome(String nome) {
 	    	this.nomeReceita = nome;
 	    }
+	    public void setImagem(String imagem) {
+	    	this.imagem = imagem;
+	    }
+
 	    public void setIngredientes(String ingredientes) {
 	    	this.ingredientes = ingredientes;
 	    }
@@ -35,5 +40,9 @@ public class Receita {
 	    public String getIngredientes() {
 	        return ingredientes;
 	    }
+	    public String getImagem() {
+	        return imagem;
+	    }
+
 
 }

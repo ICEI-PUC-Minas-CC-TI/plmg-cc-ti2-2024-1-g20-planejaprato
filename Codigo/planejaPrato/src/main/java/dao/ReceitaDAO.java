@@ -26,14 +26,14 @@ public class ReceitaDAO extends DAO {
     String url = "jdbc:postgresql://localhost:5432/postgres"; 
     String usuario = "postgres";
     String senha = "edson";
-    public void cadastrarReceita(String nome,String ingredientes,String modoDePreparo) {
+    public void cadastrarReceita(String nome,String ingredientes,String modoDePreparo,String imagem) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "INSERT INTO Receita (nome, ingredientes,modoDePreparo) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO Receita (nome, ingredientes, modoDePreparo, imagem) VALUES (?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, nome);
             preparedStatement.setString(2, ingredientes);
             preparedStatement.setString(3, modoDePreparo);
-
+            preparedStatement.setString(4, imagem);
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -86,6 +86,8 @@ public class ReceitaDAO extends DAO {
 			receita.setNome(resultSet.getString("nome"));
 			receita.setIngredientes(resultSet.getString("ingredientes"));
 			receita.setModoDePreparo(resultSet.getString("modoDePreparo"));
+			receita.setImagem(resultSet.getString("imagem"));
+
 			listReceitas.add(receita); 
 			} 
 		}catch (SQLException e) { 

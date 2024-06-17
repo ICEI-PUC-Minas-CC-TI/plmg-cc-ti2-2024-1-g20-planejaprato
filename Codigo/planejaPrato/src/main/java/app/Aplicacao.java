@@ -3,6 +3,8 @@
 package app;
 
 import static spark.Spark.*;
+
+import service.ClienteService;
 import service.ReceitaService;
 
 import java.io.File;
@@ -10,13 +12,17 @@ import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-
 import model.Receita;
-
+import java.net.URI;
+import java.net.http.*;
+import org.json.JSONObject;
 
 public class Aplicacao {
+    public static OpenAIClient client = new OpenAIClient();
 	// Gera uma instancia de ReceitaService
     public static ReceitaService receitaService = new ReceitaService();
+    public static ClienteService clienteService = new ClienteService();
+
 
     // Criar uma String auxiliar para futuras implementações e usos
     public static String html = new String();
@@ -42,6 +48,7 @@ public class Aplicacao {
             String nome = request.queryParams("nome");
             String ingredientes = request.queryParams("ingredientes");
             String modoDePreparo = request.queryParams("modoDePreparo");  
+            String nomeImg = client.createImages(nome);
             
             // Converte os valores para minúsculas
             nome = nome.toLowerCase();
@@ -51,11 +58,13 @@ public class Aplicacao {
             // Imprime os valores recebidos no console
             System.out.println("Nome: " + nome);
             System.out.println("Ingredientes: " + ingredientes);
-            System.out.println("Modo de Preparo: " + modoDePreparo);      
+            System.out.println("Modo de Preparo: " + modoDePreparo);
+            System.out.println("Url Imagem: " + nomeImg);      
+
             
             // Chama o serviço de cadastro de receita
             // Manda os parametros para a função cadastrarReceita de receitaService
-            receitaService.cadastraReceita(nome, ingredientes, modoDePreparo);          
+            receitaService.cadastraReceita(nome, ingredientes, modoDePreparo, nomeImg);          
             
             // Printar todas as receitar do BD no console
             receitaService.printarReceitas(receitaService.retornarTodasReceitas());
@@ -67,10 +76,43 @@ public class Aplicacao {
             
            
         });
-        
+        post("/cadastra-cliente", (request, response) -> {
+            // Obtém os parâmetros da requisição
+            String nome = request.queryParams("nome");
+            String cep = request.queryParams("cep");
+            String email = request.queryParams("email");
+            String senha = request.queryParams("senha");
+            String endereco = request.queryParams("endereco");  
+            String telefone = request.queryParams("telefone");  
+            String cidade = request.queryParams("cidade");  
+            
+            // Converte os valores para minúsculas
+            nome = nome.toLowerCase();
+            email = email.toLowerCase();
+            senha = senha.toLowerCase();
+            endereco = endereco.toLowerCase();
+            telefone = telefone.toLowerCase();
+            cidade = cidade.toLowerCase();
+            cep = cep.toLowerCase();
+            
+            // Chama o serviço de cadastro de receita
+            // Manda os parametros para a função cadastrarReceita de receitaService
+            clienteService.cadastrarCliente(nome, senha, endereco, email, telefone, cidade, cep);          
+            
+            // Printar todas as receitar do BD no console
+            clienteService.printarClientes(clienteService.retornarTodosClientes());
+            
+            // Preencher a string aux com o conteudo do HTML
+            html = htmlText("index.html");
+            return html;
+            
+           
+        });
+
+
         
         // ainda nao funciona
-        // Rota para atualizar html yourRecipes com receitas do bd via POST 
+        // Rota para atualizar html yourRecipes com receitas do bd via GET 
         get("/yourRecipes", (request, response) -> {
             html = htmlText("yourRecipes.html");
             html = receitaService.replaceYourRecipes(html);

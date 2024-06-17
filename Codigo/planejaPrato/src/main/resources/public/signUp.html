@@ -19,46 +19,37 @@
     <main class="form-signup w-100 m-auto">
         
         <!-- Caixas com espaço para input do usuario -->
-        <form class="row g-3">
+		<form action="/cadastra-cliente" method="post" id="clienteForm" class = "row g-3">
+
             <h1 class="h3 mb-3 fw-normal">Please sign up</h1>
+           	<div class="col-md-6">
+                <label for="inputEmail4" class="form-label">Nome</label>
+                <input type="email" class="form-control" id="inputEmail4" name="nome" required >
+            </div>
+
             <div class="col-md-6">
                 <label for="inputEmail4" class="form-label">Email</label>
-                <input type="email" class="form-control" id="inputEmail4">
+                <input type="email" class="form-control" id="inputEmail4" name="email" required >
             </div>
             <div class="col-md-6">
-                <label for="inputPassword4" class="form-label">Password</label>
-                <input type="password" class="form-control" id="inputPassword4">
+                <label for="inputPassword4" class="form-label">Senha</label>
+                <input type="password" class="form-control" id="inputPassword4" name="senha" required >
             </div>
             <div class="col-12">
-                <label for="inputAddress" class="form-label">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+                <label for="inputAddress" class="form-label">Endereço</label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" name="endereco" required>
             </div>
             <div class="col-12">
-                <label for="inputAddress2" class="form-label">Telephone</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="(DDD) 9XXXX-YYYY">
+                <label for="inputAddress2" class="form-label">Telefone</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="(DDD) XXXX-YYYY" name="telefone" required>
             </div>
             <div class="col-md-6">
-                <label for="inputCity" class="form-label">City</label>
-                <input type="text" class="form-control" id="inputCity">
-            </div>
-            <div class="col-md-4">
-                <label for="inputState" class="form-label">State</label>
-                <select id="inputState" class="form-select">
-                    <option selected>Choose...</option>
-                    <option>...</option>
-                </select>
+                <label for="inputCity" class="form-label">Cidade</label>
+                <input type="text" class="form-control" id="inputCity" name="cidade" required>
             </div>
             <div class="col-md-2">
-                <label for="inputZip" class="form-label">Zip</label>
-                <input type="text" class="form-control" id="inputZip">
-            </div>
-            <div class="col-12">
-                <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="gridCheck">
-                    <label class="form-check-label" for="gridCheck">
-                        Check me out
-                    </label>
-                </div>
+                <label for="inputZip" class="form-label">CEP</label>
+                <input type="text" class="form-control" id="inputZip" name="cep" required>
             </div>
             <div class="col-12">
                 <button type="submit" class="btn btn-primary">Sign in</button>

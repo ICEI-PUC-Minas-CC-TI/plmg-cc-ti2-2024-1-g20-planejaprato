@@ -26,7 +26,7 @@ public class ClienteDAO extends DAO {
 
     public void cadastrarCliente(Cliente cliente) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "INSERT INTO Cliente ( nome, endereco, email, numeroTelefone) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO Cliente ( nome, email, endereco, telefone, senha, cidade, cep) VALUES (?, ?, ?, ?, ? , ? , ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, cliente.getNome());
             preparedStatement.setString(2, cliente.getEndereco());
