@@ -1,33 +1,51 @@
 package service;
+
 import java.util.List;
 import java.util.Collections;
 
+import dao.ClienteDAO;
 import dao.ReceitaDAO;
+import model.Cliente;
 import model.Receita;
 
 public class ReceitaService {
     public ReceitaDAO receitaDAO;
+    public ClienteDAO clienteDAO;
+    public static ClienteService clienteService = new ClienteService();
 
     public ReceitaService() {
         // Inicializa a instância de ReceitaDAO
         receitaDAO = new ReceitaDAO(); 
+        clienteDAO = new ClienteDAO();
     }
 
-    public void cadastraReceita(String nome, String modoDePreparo, String ingredientes,String img_url) {
+    public void cadastraReceita(String nome, String modoDePreparo, String ingredientes,String img_url,Cliente cliente) {
         	// Cria um novo objeto Receita e seta os valores no construtor
+    		System.out.println(cliente.getIdCliente());
             Receita receita = new Receita();
             receita.setNome(nome);
             receita.setIngredientes(ingredientes);
             receita.setModoDePreparo(modoDePreparo);
             receita.setImagem(img_url);
-          
-            receitaDAO.cadastrarReceita(receita.getNome(),receita.getIngredientes(),receita.getModoDePreparo(),receita.getImagem());
+            receita.setIdCliente(cliente.getIdCliente());
+            
+  
+            receitaDAO.cadastrarReceita(receita.getNome(),receita.getIngredientes(),receita.getModoDePreparo(),receita.getImagem(),receita.getIdCliente());
     }
     
     // Apenas chamar a função que esta na DAO, para retornar a lista e acessar na Aplicação
     public List<Receita> retornarTodasReceitas(){
     	return receitaDAO.getTodasReceitas();
     }
+    
+    public List<Receita> retornarReceitasDoCliente(Cliente cliente){
+    	return receitaDAO.receitasUsuario(cliente);
+    }
+    
+    public List<Cliente> retornarTodosClientes(){
+    	return clienteDAO.getTodosClientes();
+    }
+ 
     
     // Função para printar no Console todas as receitas do SQL, chamar apos chamar listarReceitas
     public void printarReceitas(List<Receita> receitas) {
@@ -42,30 +60,29 @@ public class ReceitaService {
     }
     
     //adiciona receitas do bd para o front end yourRecipes
-    public String replaceYourRecipes(String html) {
+    public String replaceYourRecipes(String html,Cliente cliente) {
     	String receita = new String();
     	String novaDiv = new String();
-    	List<Receita> todasReceitas = retornarTodasReceitas();
+    	List<Receita> todasReceitas = retornarReceitasDoCliente(cliente);
     	
     	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
     		// Criar a string com a Div
              receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
  		    		+ "<img src=\"img/"+ todasReceitas.get(i).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n" + "<div class=\"card-body\">\r\n"
              		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-             		//+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n" 
+             		+ "<p class=\"card-text\">cliente</p>\r\n" 
              		//<!-- Formulário que envia o nome da receita -->
              		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
                     + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
              		+ "<button type=\"submit\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">Ver Receita</button>\r\n"
              		+ "</form>"
              		+ "</div>\r\n"
-             		+ "</div>";
-             
-             System.out.println(todasReceitas.get(i).imagem);
+             		+ "</div>";            
     		    
              // Editar a receita
              receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
              // receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
+             receita = receita.replace("cliente", cliente.getNome());
              
              // Concatenar varias Divs
              novaDiv = novaDiv + receita;
@@ -79,12 +96,12 @@ public class ReceitaService {
     }
     
     // alterar features pelas receitas do bd
-    public String replaceFeatures(String html) {
+    public String replaceFeatures(String html,Cliente cliente) {
     	String receita = new String();
     	String novaDiv = new String();
     	List<Receita> todasReceitas = retornarTodasReceitas();
+    	List<Cliente> todosClientes = retornarTodosClientes(); 
     	
-    	//
     	int loop = todasReceitas.size();
     	loop = loop > 4 ? 4 : loop;
     	loop--;
@@ -95,18 +112,20 @@ public class ReceitaService {
     		receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
 		    		+ "<img src=\"img/"+ todasReceitas.get(pos).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n" + "<div class=\"card-body\">\r\n"
              		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-             		//+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n" 
+             		+ "<p class=\"card-text\">cliente</p>\r\n" 
              		//<!-- Formulário que envia o nome da receita -->
              		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
                     + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
              		+ "<button type=\"submit\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">Ver Receita</button>\r\n"
              		+ "</div>\r\n"
              		+ "</form>"
-             		+ "</div>";
+             		+ "</div>";		
+    		
+    		Cliente aux = clienteService.clientePorId(todasReceitas.get(pos).getIdCliente());
     		
     		// Editar a receita
     		receita = receita.replace("Nome da receita", todasReceitas.get(pos).getNome());
-    		receita = receita.replace("Seu modo de preparo", todasReceitas.get(pos).getModoDePreparo());
+    		receita = receita.replace("cliente", aux.getNome());
     		
     		// Concatenar varias Divs
     		novaDiv = novaDiv + receita;
@@ -131,6 +150,7 @@ public class ReceitaService {
     	
     	// Lista com todas as receitas do BD para pesquisa
     	List<Receita> todasReceitas = retornarTodasReceitas();
+    	List<Cliente> todosClientes = retornarTodosClientes();
 
 	 // Loop por todas as receitas para encontrar a procurada
    	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
@@ -138,7 +158,7 @@ public class ReceitaService {
          receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
 		    		+ "<img src=\"img/"+ todasReceitas.get(i).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n"	+ "<div class=\"card-body\">\r\n"
           		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-          		//+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n" 
+          		+ "<p class=\"card-text\">cliente</p>\r\n" 
           		//<!-- Formulário que envia o nome da receita -->
           		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
                  + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
@@ -149,12 +169,14 @@ public class ReceitaService {
 
 			// Editar a receita
 			if(nome == todasReceitas.get(i).getNome()) {
-			// Encontrou a receita procurada, e adiciou na div
-			receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
-			//receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
+				Cliente aux = clienteService.clientePorId(todasReceitas.get(i).getId());
+				// Encontrou a receita procurada, e adiciou na div
+				receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
+				receita = receita.replace("cliente", aux.getNome());
+				//receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
 			
-			// Sair do loop
-			i = todasReceitas.size();			
+				// Sair do loop
+				i = todasReceitas.size();			
 			}
 
 			// Concatenar varias Divs
@@ -204,6 +226,7 @@ public class ReceitaService {
     	
     	// Lista com todas as receitas do BD para pesquisa
     	List<Receita> todasReceitas = retornarTodasReceitas();
+    	List<Cliente> todosClientes = retornarTodosClientes();
     	
     	for ( int i = 0; i < todasReceitas.size(); i++ ) {
     		// Verificar se o nome da receita começa com o input de pesquisa do usuario
@@ -212,7 +235,7 @@ public class ReceitaService {
                 receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
     		    		+ "<img src=\"img/"+ todasReceitas.get(i).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n" + "<div class=\"card-body\">\r\n"
                 		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-                		//+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n" 
+                		+ "<p class=\"card-text\">cliente</p>\r\n" 
                 		//<!-- Formulário que envia o nome da receita -->
                 		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
                        + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
@@ -221,8 +244,11 @@ public class ReceitaService {
                 		+ "</div>\r\n"
                 		+ "</div>";
                 
+                Cliente aux = clienteService.clientePorId(todasReceitas.get(i).getId());
+                
                 // Editar a receita
                 receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
+                receita = receita.replace("cliente", aux.getNome());
                 //receita = receita.replace("Seu modo de preparo", todasReceitas.get(i).getModoDePreparo());
                 
                 // Concatenar varias Divs
@@ -256,11 +282,12 @@ public class ReceitaService {
     	
     	// Editar as receitas recentes
     	while ( loop >= 0 ) {
+    		
     		// codigo
             receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
 		    		+ "<img src=\"img/"+ todasReceitas.get(pos).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n" + "<div class=\"card-body\">\r\n"
              		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-             		//+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n" 
+             		+ "<p class=\"card-text\">cliente</p>\r\n" 
              		//<!-- Formulário que envia o nome da receita -->
              		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
                     + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
@@ -268,9 +295,13 @@ public class ReceitaService {
              		+ "</div>\r\n"
              		+ "</form>"
              		+ "</div>";
-    		
+            
+    		Cliente aux = new Cliente();
+            aux = clienteService.clientePorId(todasReceitas.get(pos).getIdCliente());
+            
     		// Editar a receita
     		receita = receita.replace("Nome da receita", todasReceitas.get(pos).getNome());
+    		receita = receita.replace("cliente", aux.getNome());
     		//receita = receita.replace("Seu modo de preparo", todasReceitas.get(pos).getModoDePreparo());
     		
     		// Concatenar varias Divs
@@ -303,7 +334,7 @@ public class ReceitaService {
 	            receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
     		    		+ "<img src=\"img/"+ todasReceitas.get(pos).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n" + "<div class=\"card-body\">\r\n"
 	             		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
-	             		//+ "<p class=\"card-text\">Seu modo de preparo</p>\r\n" 
+	             		+ "<p class=\"card-text\">cliente</p>\r\n" 
 	             		//<!-- Formulário que envia o nome da receita -->
 	             		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
 	                    + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
@@ -311,9 +342,13 @@ public class ReceitaService {
 	             		+ "</div>\r\n"
 	             		+ "</form>"
 	             		+ "</div>";
+	            
+	            Cliente aux = new Cliente();
+	            aux = clienteService.clientePorId(todasReceitas.get(pos).getIdCliente());
 	    		
 	    		// Editar a receita
 	    		receita = receita.replace("Nome da receita", todasReceitas.get(pos).getNome());
+	    		receita = receita.replace("cliente", aux.getNome());
 	    		//receita = receita.replace("Seu modo de preparo", todasReceitas.get(pos).getModoDePreparo());
 	    		
 	    		// Concatenar varias Divs

@@ -69,7 +69,8 @@
                     <div class="modal-header">
 
                         <!-- Titulo da receita -->
-                        <h1 style="margin-bottom: 4vh;" class="display-4" class="modal-title fs-5" id="exampleModalLabel"><strong>Nome da receita</strong></h1>
+                        <h1 style="margin-bottom: 4vh; margin-right: 50vh;" class="display-4" class="modal-title fs-5" id="exampleModalLabel"><strong>Nome da receita</strong></h1>
+                        <!-- <img src="img/açai-com-leite-ninho.png" class="card-img-top" style="height: 16rem; width: 16rem; border-radius: 10px;"> -->
                     </div>
                     <div class="modal-body">
 
@@ -101,10 +102,12 @@
                         <!-- Botão para deixar como favorita -->
                         <input type="checkbox" class="btn-check" name="options-outlined" id="success-outlined"
                             autocomplete="off">
-                        <label class="btn btn-outline-success" for="success-outlined">Favoritar</label>
+                        <!-- <label class="btn btn-outline-success" for="success-outlined">Favoritar</label> -->
 
                         <!-- Botão para comprar ou cancelar -->
-                        <button style="margin: 8px;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                        <form action="/features" method="get" id="recipeForm">
+                            <button type="submit" style="margin: 8px;" class="btn btn-secondary" data-bs-dismiss="modal">Voltar</button>
+                        </form>
                         <button type="button" class="btn btn-primary">Comprar</button>
 
                     </div>

@@ -9,6 +9,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import model.Cliente;
 import model.Receita;
 
 
@@ -28,14 +29,16 @@ public class ReceitaDAO extends DAO {
     String usuario = "postgres";
     String senha = "luissql";
     
-    public void cadastrarReceita(String nome,String ingredientes,String modoDePreparo,String imagem) {
+    public void cadastrarReceita(String nome,String ingredientes,String modoDePreparo,String imagem,int idCliente) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "INSERT INTO Receita (nome, ingredientes, modoDePreparo, imagem) VALUES (?, ?, ?, ?)";
+            String sql = "INSERT INTO Receita (nome, ingredientes, modoDePreparo, imagem, idCliente) VALUES (?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, nome);
             preparedStatement.setString(2, ingredientes);
             preparedStatement.setString(3, modoDePreparo);
             preparedStatement.setString(4, imagem);
+            preparedStatement.setInt(5, idCliente);
+
 
             preparedStatement.executeUpdate();
         } catch (SQLException e) {
@@ -89,8 +92,34 @@ public class ReceitaDAO extends DAO {
 			receita.setIngredientes(resultSet.getString("ingredientes"));
 			receita.setModoDePreparo(resultSet.getString("modoDePreparo"));
 			receita.setImagem(resultSet.getString("imagem"));
+			receita.setIdCliente(resultSet.getInt("idcliente"));
+
+			
 
 			listReceitas.add(receita); 
+			} 
+		}catch (SQLException e) { 
+			e.printStackTrace();
+	  } 
+		return listReceitas; 
+	}
+	public List<Receita> receitasUsuario(Cliente cliente) { 
+		List<Receita> listReceitas = new ArrayList<>(); 
+		try (Connection connection = DriverManager.getConnection(url,usuario, senha)) {
+			String sql = "SELECT * FROM Receita";
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			ResultSet resultSet = preparedStatement.executeQuery();
+	  
+			while (resultSet.next()) { 
+			if(resultSet.getInt("idcliente") == cliente.getIdCliente()) {
+				Receita receita = new Receita();
+				receita.setNome(resultSet.getString("nome"));
+				receita.setIngredientes(resultSet.getString("ingredientes"));
+				receita.setModoDePreparo(resultSet.getString("modoDePreparo"));
+				receita.setImagem(resultSet.getString("imagem"));
+
+			listReceitas.add(receita); 
+			}
 			} 
 		}catch (SQLException e) { 
 			e.printStackTrace();

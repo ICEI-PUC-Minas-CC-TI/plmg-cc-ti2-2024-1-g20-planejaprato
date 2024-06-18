@@ -25,6 +25,7 @@ public class ClienteDAO extends DAO {
     String senha = "luissql";
 
     public void cadastrarCliente(Cliente cliente) {
+
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
             String sql = "INSERT INTO cliente ( email, endereco, telefone, senha, cidade, cep, nome) VALUES (?, ?, ?, ?, ? , ? , ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -53,7 +54,7 @@ public class ClienteDAO extends DAO {
 
             while (resultSet.next()) {
                 Cliente cliente = new Cliente();
-                cliente.setIdCliente(resultSet.getInt("idCliente"));
+                cliente.setIdCliente(resultSet.getInt("idcliente"));
                 cliente.setEndereco(resultSet.getString("endereco"));
                 cliente.setEmail(resultSet.getString("email"));
                 cliente.setNumeroTelefone(resultSet.getString("telefone"));
@@ -61,7 +62,7 @@ public class ClienteDAO extends DAO {
                 cliente.setCidade(resultSet.getString("cidade"));
                 cliente.setCep(resultSet.getString("cep"));
                 cliente.setNome(resultSet.getString("nome"));
-
+                
                 clientes.add(cliente);
             }
         } catch (SQLException e) {
@@ -69,12 +70,69 @@ public class ClienteDAO extends DAO {
         }
         return clientes;
     }
+    
+    
+    public Cliente autenticarCliente(String email, String senhaCliente) {
+    	Cliente cliente = new Cliente();
+    	try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
+            String sql = "SELECT * FROM Cliente WHERE email = ? AND senha = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, email);
+            preparedStatement.setString(2, senhaCliente);
+            
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                cliente.setIdCliente(resultSet.getInt("idcliente"));
+                cliente.setEndereco(resultSet.getString("endereco"));
+                cliente.setEmail(resultSet.getString("email"));
+                cliente.setNumeroTelefone(resultSet.getString("telefone"));
+                cliente.setSenha(resultSet.getString("senha"));
+                cliente.setCidade(resultSet.getString("cidade"));
+                cliente.setCep(resultSet.getString("cep"));
+                cliente.setNome(resultSet.getString("nome"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    	
+        return cliente;
+    }
+    public Cliente retornaClientePorId(int id) {
+    	Cliente cliente = new Cliente();
+    	try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
+            String sql = "SELECT * FROM Cliente WHERE idcliente = ?";
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setInt(1, id);
+            
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if(resultSet.next()) {
+                cliente.setIdCliente(resultSet.getInt("idcliente"));
+                cliente.setEndereco(resultSet.getString("endereco"));
+                cliente.setEmail(resultSet.getString("email"));
+                cliente.setNumeroTelefone(resultSet.getString("telefone"));
+                cliente.setSenha(resultSet.getString("senha"));
+                cliente.setCidade(resultSet.getString("cidade"));
+                cliente.setCep(resultSet.getString("cep"));
+                cliente.setNome(resultSet.getString("nome"));
+            }
+            
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    	System.out.println("Cliente por id" + cliente.getNome());
+        return cliente;
+    }
+
     public boolean atualizarCliente(Cliente cliente) {
         boolean status = false;
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
             String sql = "UPDATE Cliente SET nome = ?, endereco = ?, email = ?, numero_telefone = ? WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
-            preparedStatement.setString(1, cliente.getNome());
+              preparedStatement.setString(1, cliente.getNome());
             preparedStatement.setString(2, cliente.getEndereco());
             preparedStatement.setString(3, cliente.getEmail());
             preparedStatement.setString(4, cliente.getNumeroTelefone());
@@ -105,6 +163,10 @@ public class ClienteDAO extends DAO {
         }
         return status;
     }
+
+	public List<Cliente> getTodosClientes() {
+		return listarClientes();
+	}
 
 }
 

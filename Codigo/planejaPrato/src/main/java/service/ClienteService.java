@@ -19,7 +19,7 @@ public class ClienteService {
         clienteDAO = new ClienteDAO(); 
     }
 
-    public void cadastrarCliente(String nome, String endereco, String email, String telefone,String senha, String cidade,String cep) {
+    public void cadastrarCliente(String nome, String senha, String endereco, String email,String telefone, String cidade,String cep) {
         Cliente cliente = new Cliente(nome, senha, endereco, email, telefone, cidade, cep);        
         clienteDAO.cadastrarCliente(cliente);
     }
@@ -39,7 +39,13 @@ public class ClienteService {
             System.out.println("--------------------------");
         }
     }
+    public Cliente autenticarCliente(String email, String senha){
+    	return clienteDAO.autenticarCliente(email,senha);
+    }
 
+    public Cliente clientePorId(int id) {
+    	return clienteDAO.retornaClientePorId(id);
+    }
 
 
 } 
