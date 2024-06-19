@@ -45,6 +45,7 @@ public class ClienteDAO extends DAO {
         }
     }
 
+    // Nao funciona da pau em tudo
     public List<Cliente> listarClientes() {
         List<Cliente> clientes = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
@@ -123,7 +124,7 @@ public class ClienteDAO extends DAO {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    	System.out.println("Cliente por id" + cliente.getNome());
+    	// System.out.println("Cliente por id" + cliente.getNome());
         return cliente;
     }
 

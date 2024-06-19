@@ -26,7 +26,7 @@ public class IngredienteDAO extends DAO {
 
     public void cadastrarIngrediente(Ingrediente ingrediente) {
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "INSERT INTO Ingredientes (idIngrediente, nome, preco) VALUES (?, ?, ?)";
+            String sql = "INSERT INTO ingrediente (idIngrediente, nome, preco) VALUES (?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, ingrediente.getIdIngrediente());
             preparedStatement.setString(2, ingrediente.getNome());
@@ -41,7 +41,7 @@ public class IngredienteDAO extends DAO {
     public List<Ingrediente> listarIngredientes() {
         List<Ingrediente> ingredientes = new ArrayList<>();
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "SELECT * FROM Ingredientes";
+            String sql = "SELECT * FROM ingrediente";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             ResultSet resultSet = preparedStatement.executeQuery();
 
@@ -61,7 +61,7 @@ public class IngredienteDAO extends DAO {
     public boolean atualizarIngrediente(Ingrediente ingrediente) {
         boolean status = false;
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "UPDATE Ingredientes SET nome = ?, preco = ? WHERE idIngrediente = ?";
+            String sql = "UPDATE ingrediente SET nome = ?, preco = ? WHERE idIngrediente = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setString(1, ingrediente.getNome());
             preparedStatement.setFloat(2, ingrediente.getPreco());
@@ -79,7 +79,7 @@ public class IngredienteDAO extends DAO {
     public boolean deletarIngrediente(int id) {
         boolean status = false;
         try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
-            String sql = "DELETE FROM Ingredientes WHERE id = ?";
+            String sql = "DELETE FROM ingrediente WHERE id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sql);
             preparedStatement.setInt(1, id);
 

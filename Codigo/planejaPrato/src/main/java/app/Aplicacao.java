@@ -5,6 +5,7 @@ package app;
 import static spark.Spark.*;
 
 import service.ClienteService;
+import service.IngredienteService;
 import service.ReceitaService;
 
 import java.io.File;
@@ -24,6 +25,7 @@ public class Aplicacao {
     public static OpenAIClient client = new OpenAIClient();
     public static ReceitaService receitaService = new ReceitaService();
     public static ClienteService clienteService = new ClienteService();
+    public static IngredienteService ingredienteService = new IngredienteService();
 
 
     // Criar uma String auxiliar para futuras implementações e usos
@@ -41,18 +43,17 @@ public class Aplicacao {
 
         // Configura o diretório para arquivos estáticos (HTML, CSS, JS)
         staticFiles.externalLocation("src/main/resources/public");
-
-        // Rota para redirecionar "/index" para "index.html"
-        get("/index", (req, res) -> {
-            res.redirect("index.html");
-            return null;
-        });
         
+        // Configuração para redirecionar automaticamente para /login.html ao acessar a raiz do site
         // Clicar em Ver Receita
         post("/ver-receita", (request, response) -> {
         	
         	// Codigo para verificar se o cliente ta logado e retornar uma instancia com os dados deste cliente
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	if (clienteLogado == null) {
+                response.redirect("/login.html");
+                return null;
+            }
         	// Printar o nome do cliente q esta logado
         	System.out.println(clienteLogado.getNome());
         	
@@ -66,24 +67,51 @@ public class Aplicacao {
             html = htmlText("receita.html");
             
         	// Atualizar o HTML com o bd necessario
-            html = receitaService.replaceIngredientes(html, receita);
+            html = receitaService.replaceIngredientes(html, receita, clienteLogado.getNome());
             
             return html;
         });  
+        get("/home", (request, response) -> {
+        	String html = htmlText("home.html");
+        	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	if (clienteLogado == null) {
+                response.redirect("/login.html");
+                return null;
+            }
+        	System.out.println(clienteLogado.getNome());
+
+        	String aux = new String();
+        	aux = htmlText("createRecipeModal.html");
+        	aux = ingredienteService.replaceIngredientes(aux);
+        	html = ingredienteService.replaceIngredientesPages(html, aux,clienteLogado.getNome());
+        	return html;
+        });
+        
 
         // Rota para cadastrar uma receita via POST
         post("/cadastra-receita", (request, response) -> {
         	
         	// Codigo para verificar se o cliente ta logado e retornar uma instancia com os dados deste cliente
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	if (clienteLogado == null) {
+                response.redirect("/login.html");
+                return null;
+            }
+        	
         	// Printar o nome do cliente q esta logado
         	System.out.println(clienteLogado.getNome());
         	
+
             // Obtém os parâmetros da requisição
             String nome = request.queryParams("nome");
-            String ingredientes = request.queryParams("ingredientes");
+            String[] ingredientesChegada = request.queryParamsValues("ingredientes");
+            String ingredientes = String.join(", ", ingredientesChegada);
+            
+            
+            
             String modoDePreparo = request.queryParams("modoDePreparo");  
             String nomeImg = client.createImages(nome);
+            
             
             // Converte os valores para minúsculas
             nome = nome.toLowerCase();
@@ -103,15 +131,13 @@ public class Aplicacao {
             
             // Printar todas as receitar do BD no console
             receitaService.printarReceitas(receitaService.retornarReceitasDoCliente(clienteLogado));
-            
             // Preencher a string aux com o conteudo do HTML
-            html = htmlText("yourRecipes.html");
-            html = receitaService.replaceYourRecipes(html,clienteLogado);
-            return html;
-            
-           
+            html = receitaService.replaceYourRecipes(html, clienteLogado);
+            return html;       
         });
+        
         post("/cadastra-cliente", (request, response) -> {
+        	
         	        	
             // Obtém os parâmetros da requisição
             String nome = request.queryParams("nome");
@@ -132,13 +158,13 @@ public class Aplicacao {
             cidade = cidade.toLowerCase();
             cep = cep.toLowerCase();
             
-            
+            // printar os dados do cliente
             System.out.println("Nome: "+ nome +"\nEmail: " +email + "\nSenha: " + senha + "Endereco: "+endereco + "\nTelefone: "+ telefone + "\nCidade: "+cidade + "\nCep: "+cep);
             // Chama o serviço de cadastro de receita
             // Manda os parametros para a função cadastrarReceita de receitaService
             clienteService.cadastrarCliente(nome, senha, endereco, email, telefone, cidade, cep);          
             
-            // Printar todas as receitar do BD no console
+            // Printar todas os usuarios do BD no console
             clienteService.printarClientes(clienteService.retornarTodosClientes());
             
             // Preencher a string aux com o conteudo do HTML
@@ -153,21 +179,28 @@ public class Aplicacao {
             
             //System.out.println("Email: "+ email+ "\nSenha: "+ senha);
             
-            Cliente clienteLogado =  clienteService.autenticarCliente(email, senha);
+            Cliente clienteLogado = clienteService.autenticarCliente(email, senha);
             
-            html = htmlText("index.html");
+            // mandar para o index apos cadastrado
+            html = htmlText("home.html");
+            String aux = htmlText("createRecipeModal.html");
+            aux = ingredienteService.replaceIngredientes(aux);
+            html = ingredienteService.replaceIngredientesPages(html, aux, clienteLogado.getNome());
+            
             if(clienteLogado!=null) {
-            	System.out.println("Nome: "+clienteLogado.getEmail());
-            	request.session().attribute("usuarioLogado",clienteLogado);
-            	return html;
+            	// printar o email do usuario logado
+            	System.out.println("Nome: " + clienteLogado.getEmail());
+            	
+            	// manter logado
+            	request.session().attribute("usuarioLogado", clienteLogado);
             }
             else {
-            	return ("Email ou senha inválidos.");
+            	// caso nao logar, redirecionar para o login novamente
+            	html = htmlText("login.html");
             }
-            // Html para a pagina a ser redirecionado
             
-        	// Atualizar o HTML com o bd necessario
-            
+            // redirecionar para pagina certa
+            return html; 
         });  
 
         
@@ -176,6 +209,10 @@ public class Aplicacao {
         	
         	// Codigo para verificar se o cliente ta logado e retornar uma instancia com os dados deste cliente
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	if (clienteLogado == null) {
+                response.redirect("/login.html");
+                return null;
+            }
         	// Printar o nome do cliente q esta logado
         	System.out.println(clienteLogado.getNome());
         	
@@ -187,7 +224,7 @@ public class Aplicacao {
         	html = htmlText("featureRecipes.html");
         	
         	// Atualizar o HTML com o bd necessario
-            html = receitaService.replacePesquisaFeatureRecipes(html, input);
+            html = receitaService.replacePesquisaFeatureRecipes(html, input, clienteLogado.getNome());
             
             // Retonar html com a pesquisa 
         	return html;
@@ -199,11 +236,22 @@ public class Aplicacao {
         	
         	// Codigo para verificar se o cliente ta logado e retornar uma instancia com os dados deste cliente
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	if (clienteLogado == null) {
+                response.redirect("/login.html");
+                return null;
+            }
+        	
+        	String aux = new String();
+        	aux = htmlText("createRecipeModal.html");
+        	html = htmlText("yourRecipes.html");        	
+        	aux = ingredienteService.replaceIngredientes(aux);
+        	
+        	html = ingredienteService.replaceIngredientesPages(html, aux, clienteLogado.getNome());
+
         	// Printar o nome do cliente q esta logado
         	System.out.println(clienteLogado.getNome());
         	        	
-        	html = htmlText("yourRecipes.html");
-        	html = receitaService.replaceYourRecipes(html,clienteLogado);
+        	html = receitaService.replaceYourRecipes(html, clienteLogado);
         	
         	return html;
         });
@@ -213,6 +261,10 @@ public class Aplicacao {
         	
         	// Codigo para verificar se o cliente ta logado e retornar uma instancia com os dados deste cliente
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	if (clienteLogado == null) {
+                response.redirect("/login.html");
+                return null;
+            }
         	// Printar o nome do cliente q esta logado
         	System.out.println(clienteLogado.getNome());
         	
@@ -220,7 +272,7 @@ public class Aplicacao {
             html = htmlText("featureRecipes.html");
             
             // Atualizar o HTML com o bd necessario
-            html = receitaService.replaceNewRecipes(html, 1);
+            html = receitaService.replaceNewRecipes(html, 1, clienteLogado.getNome());
             
             // Retornar o HTML editado
             return html;

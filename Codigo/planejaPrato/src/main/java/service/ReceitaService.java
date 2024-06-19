@@ -60,10 +60,17 @@ public class ReceitaService {
     }
     
     //adiciona receitas do bd para o front end yourRecipes
-    public String replaceYourRecipes(String html,Cliente cliente) {
+    public String replaceYourRecipes(String html, Cliente cliente) {
     	String receita = new String();
     	String novaDiv = new String();
     	List<Receita> todasReceitas = retornarReceitasDoCliente(cliente);
+    	
+    	// Printar o nome do usuario
+    	String nomeUsuario = new String();
+		nomeUsuario = "<h3>SeuNome</h3>\r\n";		 
+        // Editar o front end com o Java
+        nomeUsuario = nomeUsuario.replace("SeuNome", cliente.getNome());
+        html = html.replace("<NomeUsuario>", nomeUsuario);
     	
     	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
     		// Criar a string com a Div
@@ -100,7 +107,13 @@ public class ReceitaService {
     	String receita = new String();
     	String novaDiv = new String();
     	List<Receita> todasReceitas = retornarTodasReceitas();
-    	List<Cliente> todosClientes = retornarTodosClientes(); 
+    	
+    	// Printar o nome do usuario
+    	String nomeUsuario = new String();
+		nomeUsuario = "<h3>SeuNome</h3>\r\n";		 
+        // Editar o front end com o Java
+        nomeUsuario = nomeUsuario.replace("SeuNome", cliente.getNome());
+        html = html.replace("<NomeUsuario>", nomeUsuario);
     	
     	int loop = todasReceitas.size();
     	loop = loop > 4 ? 4 : loop;
@@ -150,7 +163,13 @@ public class ReceitaService {
     	
     	// Lista com todas as receitas do BD para pesquisa
     	List<Receita> todasReceitas = retornarTodasReceitas();
-    	List<Cliente> todosClientes = retornarTodosClientes();
+    	
+    	// Printar o nome do usuario
+    	String nomeUsuario = new String();
+		nomeUsuario = "<h3>SeuNome</h3>\r\n";		 
+        // Editar o front end com o Java
+        nomeUsuario = nomeUsuario.replace("SeuNome", nome);
+        html = html.replace("<NomeUsuario>", nomeUsuario);
 
 	 // Loop por todas as receitas para encontrar a procurada
    	 for ( int i = 0; i < todasReceitas.size(); i++ ) {
@@ -192,11 +211,18 @@ public class ReceitaService {
 
 	
 	// Adicionar os ingredientes do BD
-	public String replaceIngredientes(String html, Receita receita) {
+	public String replaceIngredientes(String html, Receita receita, String nome) {
 		// Replace para editar os textos
 		html = html.replace("Nome da receita", receita.getNome());
 		html = html.replace("Nome dos ingredientes",  receita.getIngredientes());
 		html = html.replace("Seu modo de preparo", receita.getModoDePreparo());	
+		
+		// Printar o nome do usuario
+    	String nomeUsuario = new String();
+		nomeUsuario = "<h3>SeuNome</h3>\r\n";		 
+        // Editar o front end com o Java
+        nomeUsuario = nomeUsuario.replace("SeuNome", nome);
+        html = html.replace("<NomeUsuario>", nomeUsuario);
 		
 		// Retorna a string com o HTML
 		return html;
@@ -219,14 +245,20 @@ public class ReceitaService {
     }
 
     //Pesquisar receitas pelo input e adicionar ao front
-    public String replacePesquisaFeatureRecipes(String html, String input){    	
+    public String replacePesquisaFeatureRecipes(String html, String input, String nome){    	
     	// String auxiliares para criar a nova div
     	String receita = new String();
     	String novaDiv = new String();
     	
+    	// Printar o nome do usuario
+    	String nomeUsuario = new String();
+		nomeUsuario = "<h3>SeuNome</h3>\r\n";		 
+        // Editar o front end com o Java
+        nomeUsuario = nomeUsuario.replace("SeuNome", nome);
+        html = html.replace("<NomeUsuario>", nomeUsuario);
+    	
     	// Lista com todas as receitas do BD para pesquisa
     	List<Receita> todasReceitas = retornarTodasReceitas();
-    	List<Cliente> todosClientes = retornarTodosClientes();
     	
     	for ( int i = 0; i < todasReceitas.size(); i++ ) {
     		// Verificar se o nome da receita começa com o input de pesquisa do usuario
@@ -244,7 +276,8 @@ public class ReceitaService {
                 		+ "</div>\r\n"
                 		+ "</div>";
                 
-                Cliente aux = clienteService.clientePorId(todasReceitas.get(i).getId());
+                Cliente aux = new Cliente();
+                aux = clienteService.clientePorId(todasReceitas.get(i).getIdCliente());
                 
                 // Editar a receita
                 receita = receita.replace("Nome da receita", todasReceitas.get(i).getNome());
@@ -261,14 +294,21 @@ public class ReceitaService {
         html = html.replace("Receitas em Destaque!", "Pesquisa por: " + input);
     	
         // Chamar funcao para editar o resto da pagina features como os NewRecipes e retornar tudo pronto
-    	return replaceNewRecipes(html, 0);
+    	return replaceNewRecipes(html, 0, nome);
     }
 
  // alterar features pelas receitas do bd
-    public String replaceNewRecipes(String html, int teste) {
+    public String replaceNewRecipes(String html, int teste, String nome) {
     	// String auxiliares para criar a nova div
     	String receita = new String();
     	String novaDiv = new String();
+    	
+    	// Printar o nome do usuario
+    	String nomeUsuario = new String();
+		nomeUsuario = "<h3>SeuNome</h3>\r\n";		 
+        // Editar o front end com o Java
+        nomeUsuario = nomeUsuario.replace("SeuNome", nome);
+        html = html.replace("<NomeUsuario>", nomeUsuario);
     	
     	// Lista com todas as receitas do BD para pesquisa
     	List<Receita> todasReceitas = retornarTodasReceitas();

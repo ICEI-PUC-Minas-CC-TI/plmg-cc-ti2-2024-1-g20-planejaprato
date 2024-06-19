@@ -30,10 +30,11 @@ public class DAO {
             DatabaseMetaData metaData = conexao.getMetaData();
             ResultSet tables = metaData.getTables(null, null, null, new String[]{"TABLE"});
 
-            System.out.println("Tabelas encontradas:");
+            //System.out.println("Tabelas encontradas:");
             while (tables.next()) {
                 String tableName = tables.getString("TABLE_NAME");
-                System.out.println(tableName);
+                // printar as tabelas
+                //System.out.println(tableName);
             }
 
 		} catch (ClassNotFoundException e) { 

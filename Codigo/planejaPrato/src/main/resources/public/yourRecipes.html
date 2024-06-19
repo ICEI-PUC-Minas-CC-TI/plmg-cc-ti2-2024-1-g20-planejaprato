@@ -17,51 +17,53 @@
 </head>
 
 <body>
-    <!-- <header> -->
-    <!-- Fetch no header -->
-    <!-- <div id="headerCopy"></div> -->
-    <!-- </header> -->
-    <header>
-    
-      <div class="container">
-        <header class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
-          <div class="col-md-3 mb-2 mb-md-0">
-            <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
-              <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
-                <use xlink:href="#bootstrap"></use>
-              </svg>
-            </a>
-          </div>
-      
-          <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-            <li><a href="index.html" class="nav-link px-2">Home</a></li>
-            <form action="/features" method="get" id="recipeForm">
-              <button type="submit" class="nav-link px-2">Pesquisar</button>
-            </form>
-            <!-- <li><a href="featureRecipes.html" class="nav-link px-2">Features</a></li> -->
-            <form action="/yourRecipes" method="get" id="recipeForm">
+  <!-- <header> -->
+  <!-- Fetch no header -->
+  <!-- <div id="headerCopy"></div> -->
+  <!-- </header> -->
+  <header>
+
+    <div class="container">
+      <header
+        class="d-flex flex-wrap align-items-center justify-content-center justify-content-md-between py-3 mb-4 border-bottom">
+        <div class="col-md-3 mb-2 mb-md-0">
+          <a href="/" class="d-inline-flex link-body-emphasis text-decoration-none">
+            <svg class="bi" width="40" height="32" role="img" aria-label="Bootstrap">
+              <use xlink:href="#bootstrap"></use>
+            </svg>
+          </a>
+        </div>
+
+        <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
+
+          <form action="/home" method="get" id="recipeForm">
+            <button type="submit" class="nav-link px-2">Home</button>
+          </form>
+          <form action="/features" method="get" id="recipeForm">
+            <button type="submit" class="nav-link px-2">Pesquisar</button>
+          </form>
+          <!-- <li><a href="featureRecipes.html" class="nav-link px-2">Features</a></li> -->
+          <form action="/yourRecipes" method="get" id="recipeForm">
             <button type="submit" class="nav-link px-2">Suas receitas</button>
           </form>
-      
-            <!-- <li><a href="#" class="nav-link px-2" style="margin-left: 16vh;">Seu Carrinho</a></li> -->
-            <!-- Cart icon -->
-            <li class="nav-link px-2">
-              <i class = "bx bx-cart" id="cart-icon" data-quantity = "0"></i>
-            </li>
-          </ul>
-          <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2" onclick="window.location.href='login.html'">Login</button>
-            <button type="button" class="btn btn-primary"
-              onclick="window.location.href='signup.html'">Sign-up</button>
-          </div>
-        </header>
-      </div>
-      
-      <!-- Fetch no header -->
-      <!-- <div id="headerCopy"></div> -->
-  
-    </header>
-  
+
+          <!-- <li><a href="#" class="nav-link px-2" style="margin-left: 16vh;">Seu Carrinho</a></li> -->
+          <!-- Cart icon -->
+          <li class="nav-link px-2">
+            <i class="bx bx-cart" id="cart-icon" data-quantity="0"></i>
+          </li>
+        </ul>
+        <div class="col-md-3 text-end">
+          <NomeUsuario>
+        </div>
+      </header>
+    </div>
+
+    <!-- Fetch no header -->
+    <!-- <div id="headerCopy"></div> -->
+
+  </header>
+
 
   <main>
 
@@ -69,71 +71,65 @@
     <div id="overlay"></div>
     <!-- Primeira parte, onde tem um botão para cadastrar nova receita -->
     <div class="firstStage">
-      
+
       <!-- Cart -->
-      <div class = "cart">
-        <h2 class = "cart-title">Seu Carrinho</h2>
+      <div class="cart">
+        <h2 class="cart-title">Seu Carrinho</h2>
         <!-- Conteudo -->
-        <div class = "cart-content">
-          <div class = "cart-box">
-            <img src = "img/farinhaIMG.jpeg" alt="" class="cart-img"/>
-            <div class = "detail-box">
-              <div class ="cart-product-title">Ingredientes</div>
-              <div class = "cart-price">$50</div>
-              <input 
-                type="number" 
-                name="" 
-                id="" 
-                value="1" 
-                class="cart-quantity"
-              />
+        <div class="cart-content">
+          <div class="cart-box">
+            <img src="img/farinhaIMG.jpeg" alt="" class="cart-img" />
+            <div class="detail-box">
+              <div class="cart-product-title">Ingredientes</div>
+              <div class="cart-price">$50</div>
+              <input type="number" name="" id="" value="1" class="cart-quantity" />
             </div>
             <!-- remove item -->
-            <i class = "bx bx-trash-alt cart-remove"></i>
+            <i class="bx bx-trash-alt cart-remove"></i>
           </div>
         </div>
         <!--Valor e preço totais -->
-        <div class = "total">
-          <div class = "total-title">Total</div>
-          <div class = "total-price">$0</div>
+        <div class="total">
+          <div class="total-title">Total</div>
+          <div class="total-price">$0</div>
         </div>
         <!-- buy botton -->
-        <button type = "button" class = "btn-buy">Comprar</button>
+        <button type="button" class="btn-buy">Comprar</button>
         <!-- Close cart-->
-        <i class = "bx bx-x" id="close-cart"></i>
+        <i class="bx bx-x" id="close-cart"></i>
       </div>
 
-    <!-- Fetch do Modal de confirmação -->
-    <div id="confirmRecipeModalCopy"></div>
+      <!-- Fetch do Modal de confirmação -->
+      <div id="confirmRecipeModalCopy"></div>
 
 
-    <div class="firstStage">
-      <div class="featureText">
+      <div class="firstStage">
+        <div class="featureText">
 
-        <!-- Inicio com botão para cadastrar nova receita -->
-        <h1 class="display-1">Inspire Outros Chefs</h1>
-        <button type="button" data-bs-toggle="modal" data-bs-target="#createRecipeModal" class="btn btn-light"
-          style="margin-top: 3vh; font-size: 24px;">Cadastre sua Receita</button>
+          <!-- Inicio com botão para cadastrar nova receita -->
+          <h1 class="display-1">Inspire Outros Chefs</h1>
+          <button type="button" data-bs-toggle="modal" data-bs-target="#createRecipeModal" class="btn btn-light"
+            style="margin-top: 3vh; font-size: 24px;">Cadastre sua Receita</button>
 
-        <div id="createRecipeCopy"></div>
+          <div id="createRecipeCopy"></div>
 
+        </div>
       </div>
-    </div>
 
 
 
-    <div class="secondStage" style="padding-top: 6vh;">
-      <div class="firstBoxFormat" style="margin: 0 2vh 0 2vh;">
+      <div class="secondStage" style="padding-top: 6vh;">
+        <div class="firstBoxFormat" style="margin: 0 2vh 0 2vh;">
 
-        <h1 class="display-1" style="text-align: center;">Suas Receitas</h1>
+          <h1 class="display-1" style="text-align: center;">Suas Receitas</h1>
 
-        <div class="grid-container" style="margin-top: 2vh;">
+          <div class="grid-container" style="margin-top: 2vh;">
 
-          <!-- Fetch do modal com a receita e modo de preparo -->
-          <div id="recipeModalCopy"></div>
+            <!-- Fetch do modal com a receita e modo de preparo -->
+            <div id="recipeModalCopy"></div>
 
-          <!-- cada div Card é uma caixa com uma receita cadastrada e com botão para abrir o modal da receita recipeModal-->
-          <!-- <div class="card" style="width: 18rem; margin: 10px;">
+            <!-- cada div Card é uma caixa com uma receita cadastrada e com botão para abrir o modal da receita recipeModal-->
+            <!-- <div class="card" style="width: 18rem; margin: 10px;">
             <img src="img/r8.png" class="card-img-top" alt=".." style="height: 16rem; width: 100%;">
             <div class="card-body">
               <h5 class="card-title">Nome da receita</h5>
@@ -142,23 +138,24 @@
             </div>
           </div> -->
 
-          <CaixaSuasReceitas>
+            <CaixaSuasReceitas>
+
+          </div>
 
         </div>
-
       </div>
-    </div>
 
 
 
-    <!-- Receitas Diversas -->
-    <div class="thirdStage" style="padding-top: 4vh;">
-      <div class="secondBoxFormat">
+      <!-- Receitas Diversas -->
+      <div class="thirdStage" style="padding-top: 4vh;">
+        <div class="secondBoxFormat">
 
-        <h1 class="display-1" style="text-align: center;">Receitas Favoritadas</h1>
+          <h1 class="display-1" style="text-align: center;">Receitas Favoritadas</h1>
 
 
 
+        </div>
       </div>
     </div>
 
@@ -170,13 +167,13 @@
     <div class="container py-3 my-4 border-top">
       <div class="row d-flex flex-wrap justify-content-between align-items-center">
         <p class="col-md-4 mb-0 text-body-secondary">© 2024 Company, Inc</p>
-    
+
         <ul class="nav col-md-4 justify-content-end">
           <li class="nav-item"><a href="index.html" class="nav-link px-2 text-body-secondary">Home</a></li>
           <form action="/features" method="get" id="recipeForm">
             <button type="submit" class="nav-link px-2 text-body-secondary">Pesquisar</button>
           </form>
-    
+
           <!-- <li class="nav-item"><a href="featureRecipes.html" class="nav-link px-2 text-body-secondary">Features</a></li> -->
         </ul>
       </div>
@@ -184,15 +181,18 @@
 
   </footer>
 
-  <script src="js/scriptFetch.js"></script>
+
+  <createModalIngredientes>
+
+
   <script src="js/scriptCart.js"></script>
   <script src="js/rolagemSuave.js"></script>
 
-  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
     crossorigin="anonymous"></script>
-    <script src="js/modalReceipes.js"></script>
+  <script src="js/modalReceipes.js"></script>
 
 </body>
 
