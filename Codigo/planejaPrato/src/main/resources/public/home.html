@@ -10,7 +10,6 @@
   <link href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,400;1,200;1,300;1,600&display=swap"
     rel="stylesheet">
   <link href="css/index.css" rel="stylesheet">
-  <link href="css/cart.css" rel="stylesheet">
 
   <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 </head>
@@ -30,7 +29,7 @@
         </div>
 
         <ul class="nav col-12 col-md-auto mb-2 justify-content-center mb-md-0">
-      
+
           <form action="/home" method="get" id="recipeForm">
             <button type="submit" class="nav-link px-2">Home</button>
           </form>
@@ -45,15 +44,13 @@
           <li><a href="#about" class="nav-link px-2">About</a></li>
 
           <!-- <li><a href="#" class="nav-link px-2" style="margin-left: 16vh;">Seu Carrinho</a></li> -->
-          <!-- Cart icon -->
-          <li class="nav-link px-2">
-            <i class="bx bx-cart" id="cart-icon" data-quantity="0"></i>
-          </li>
         </ul>
+
+
         <div class="col-md-3 text-end" id="login">
 
           <NomeUsuario>
-            
+
         </div>
       </header>
     </div>
@@ -63,39 +60,9 @@
 
   </header>
   <main>
-    <!-- filtro para tela ao clicar no carrinho -->
-    <div id="overlay"></div>
+
     <!-- Primeira parte, onde tem um botão para cadastrar nova receita -->
     <div class="firstStage">
-
-      <!-- Cart -->
-      <div class="cart">
-        <h2 class="cart-title">Seu Carrinho</h2>
-        <!-- Conteudo -->
-        <div class="cart-content">
-          <div class="cart-box">
-            <img src="img/farinhaIMG.jpeg" alt="" class="cart-img" />
-            <div class="detail-box">
-              <div class="cart-product-title">Ingredientes</div>
-              <div class="cart-price">$50</div>
-              <input type="number" name="" id="" value="1" class="cart-quantity" />
-            </div>
-            <!-- remove item -->
-            <i class="bx bx-trash-alt cart-remove"></i>
-          </div>
-        </div>
-        <!--Valor e preço totais -->
-        <div class="total">
-          <div class="total-title">Total</div>
-          <div class="total-price">$0</div>
-        </div>
-        <!-- buy botton -->
-        <button type="button" class="btn-buy">Comprar</button>
-        <!-- Close cart-->
-        <i class="bx bx-x" id="close-cart"></i>
-      </div>
-
-
 
       <div class="featureText">
 
@@ -148,60 +115,7 @@
     <div class="thirdStage" style="padding-top: 4vh;">
       <div class="secondBoxFormat">
 
-        <h1 class="display-1" style="text-align: center; padding: 2vh;">Feature Recipes</h1>
-
-        <!-- Div com as caixas para feature recipess -->
-        <div class="recipe">
-          <div class="box">
-            <div class="card">
-
-              <!-- Imagem de cada caixa de Destaques, texto e Botao para abrir o modal recipeModal -->
-              <img src="img/r1.png" alt="">
-              <div class="content">
-                <h3>Recipe 1</h3>
-                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
-                <button data-bs-toggle="modal" data-bs-target="#recipeModal">View Recipe</button>
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/r2.png" alt="">
-              <div class="content">
-                <h3>Recipe 2</h3>
-                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
-                <button>View Recipe</button>
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/r3.png" alt="">
-              <div class="content">
-                <h3>Recipe 3</h3>
-                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
-                <button>View Recipe</button>
-              </div>
-            </div>
-            <div class="card">
-              <img src="img/r4.png" alt="">
-              <div class="content">
-                <h3>Recipe 4</h3>
-                <P>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</P>
-                <button>View Recipe</button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- HTML do modal que abre ao clicar em View Recipe -->
-        <div id="recipeModalCopy"></div>
-
-      </div>
-    </div>
-
-
-    <!-- Quarta parte onde tem 4 caixas com imagens sobre categorias -->
-    <div class="fourthStage" style="padding-top: 4vh;">
-      <div class="thirdBoxFormat">
-
-        <h1 class="display-1" style="text-align: center; padding: 2vh;">Categories</h1>
+        <h1 class="display-1" style="text-align: center; padding: 2vh;">Variedade de sabores</h1>
 
         <!-- div com as caixas categories -->
         <div class="categories">
@@ -211,33 +125,37 @@
               <!-- Imagens redondas com texto dentro, para Categorias, Botão sem ação ainda -->
               <img src="img/maincourse.png" alt="">
               <div class="content">
-                <h3>Main Courses</h3>
-                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
-                <button>Read More</button>
+                <h3>Entradas</h3>
+                <form action="/features" method="get" id="recipeForm">
+            <button type="submit">Pesquisar</button>
+          </form>
               </div>
             </div>
             <div class="ca-card">
               <img src="img/desserts.png" alt="">
               <div class="content">
-                <h3>Desserts</h3>
-                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
-                <button>Read More</button>
+                <h3>Pratos principais</h3>
+                <form action="/features" method="get" id="recipeForm">
+            <button type="submit">Pesquisar</button>
+          </form>
               </div>
             </div>
             <div class="ca-card">
               <img src="img/healthyeats.png" alt="">
               <div class="content">
-                <h3>Healthy Eats</h3>
-                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
-                <button>Read More</button>
+                <h3>Aperitivos</h3>
+                <form action="/features" method="get" id="recipeForm">
+            <button type="submit">Pesquisar</button>
+          </form>
               </div>
             </div>
             <div class="ca-card">
               <img src="img/baking.png" alt="">
               <div class="content">
-                <h3>Baking</h3>
-                <p>Lorem ipsum dolor sit amet,consectetur adipiscing elit.</p>
-                <button>Read More</button>
+                <h3>Sobremesas</h3>
+                <form action="/features" method="get" id="recipeForm">
+            <button type="submit">Pesquisar</button>
+          </form>
               </div>
             </div>
           </div>
@@ -275,8 +193,6 @@
 
   <createModalIngredientes>
 
-
-    <script src="js/scriptCart.js"></script>
     <script src="js/rolagemSuave.js"></script>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"

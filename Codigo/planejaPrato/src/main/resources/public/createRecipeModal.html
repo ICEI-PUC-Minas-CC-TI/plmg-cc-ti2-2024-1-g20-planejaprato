@@ -6,7 +6,39 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
+        <style>
+          /* Estilo para reduzir o tamanho da caixa de número */
+          input[type="number"] {
+            width: 62px;
+            /* Ajuste o valor conforme necessário */
+            padding: 8px;
+            /* Adicione padding para espaçamento interno */
+            box-sizing: border-box;
+            /* Garante que o padding não aumente o tamanho total */
+            border: 2px solid #ccc;
+            /* Borda sólida cinza */
+            border-radius: 6px;
+            /* Borda arredondada */
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            /* Sombra leve */
+            transition: border-color 0.3s, box-shadow 0.3s;
+            /* Transição suave */
+            line-height: 0.5; 
+            min-width: 40px; /* Largura mínima inicial */
+            font-size: 14px; 
+          }
+          input[type="number"]:focus {
+          outline: none; /* Remove o contorno ao focar */
+          border-color: #85b7d9; /* Borda azul ao focar */
+          box-shadow: 0 0 8px rgba(133, 183, 217, 0.6); /* Sombra azul ao focar */
+          }
 
+          .checkbox-container label {
+            margin-bottom: 10px; /* Espaçamento entre cada label (cada linha de checkbox + quantidade) */
+            color: #333; /* Cor do texto */
+            font-size: 16px; /* Tamanho da fonte */            /* Espaçamento entre cada label (cada linha de checkbox + quantidade) */
+          }
+        </style>
         <!-- Formulario, ao clicar em Create, manda as strings pro java -->
         <form action="/cadastra-receita" method="post" id="recipeForm">
           <div class="modal-body">
@@ -20,9 +52,8 @@
               <div class="checkbox-container">
 
                 <ingredientesSub>
-
                   <!-- <label><input type="checkbox" name="ingredientes" value="1"> Opção </label><br>
-                  <label><input type="checkbox" name="ingredientes" value="2"> Opção 2</label><br>
+                  <label><input type="checkbox" name="ingredientes" value="farinha"> farinha</label><br>
                   <label><input type="checkbox" name="ingredientes" value="3"> Opção 3</label><br>
                   <label><input type="checkbox" name="ingredientes" value="4"> Opção 4</label><br>
                   <label><input type="checkbox" name="ingredientes" value="5"> Opção 5</label><br>
@@ -78,15 +109,22 @@
   document.addEventListener('DOMContentLoaded', function () {
     document.getElementById('search').addEventListener('input', function () {
       const searchQuery = this.value.toLowerCase();
-      const checkboxes = document.querySelectorAll('.checkbox-container label');
+      const checkboxes = Array.from(document.querySelectorAll('.checkbox-container label'));
+      const container = document.querySelector('.checkbox-container');
 
-      checkboxes.forEach(label => {
-        const text = label.textContent.toLowerCase();
-        if (text.includes(searchQuery)) {
-          label.style.display = 'block';
-        } else {
-          label.style.display = 'none';
-        }
+      const matchedElements = checkboxes.filter(label => label.textContent.toLowerCase().includes(searchQuery));
+      const unmatchedElements = checkboxes.filter(label => !label.textContent.toLowerCase().includes(searchQuery));
+
+      container.innerHTML = '';
+
+      matchedElements.forEach(label => {
+        label.style.display = 'block';
+        container.appendChild(label);
+      });
+
+      unmatchedElements.forEach(label => {
+        label.style.display = 'none';
+        container.appendChild(label);
       });
     });
   });

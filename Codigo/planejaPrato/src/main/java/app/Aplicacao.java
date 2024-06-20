@@ -44,7 +44,6 @@ public class Aplicacao {
         // Configura o diretório para arquivos estáticos (HTML, CSS, JS)
         staticFiles.externalLocation("src/main/resources/public");
         
-        // Configuração para redirecionar automaticamente para /login.html ao acessar a raiz do site
         // Clicar em Ver Receita
         post("/ver-receita", (request, response) -> {
         	
@@ -71,6 +70,7 @@ public class Aplicacao {
             
             return html;
         });  
+        
         get("/home", (request, response) -> {
         	String html = htmlText("home.html");
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
@@ -83,7 +83,9 @@ public class Aplicacao {
         	String aux = new String();
         	aux = htmlText("createRecipeModal.html");
         	aux = ingredienteService.replaceIngredientes(aux);
-        	html = ingredienteService.replaceIngredientesPages(html, aux,clienteLogado.getNome());
+        	html = ingredienteService.replaceIngredientesPages(html, aux, clienteLogado.getNome());
+        	html = receitaService.replaceRecipesHome(html);
+        	
         	return html;
         });
         
@@ -99,19 +101,15 @@ public class Aplicacao {
             }
         	
         	// Printar o nome do cliente q esta logado
-        	System.out.println(clienteLogado.getNome());
-        	
+        	System.out.println(clienteLogado.getNome());        	
 
             // Obtém os parâmetros da requisição
             String nome = request.queryParams("nome");
             String[] ingredientesChegada = request.queryParamsValues("ingredientes");
-            String ingredientes = String.join(", ", ingredientesChegada);
-            
-            
+            String ingredientes = String.join(", ", ingredientesChegada);     
             
             String modoDePreparo = request.queryParams("modoDePreparo");  
-            String nomeImg = client.createImages(nome);
-            
+            String nomeImg = client.createImages(nome + " receita culinaria");
             
             // Converte os valores para minúsculas
             nome = nome.toLowerCase();
@@ -127,17 +125,19 @@ public class Aplicacao {
             
             // Chama o serviço de cadastro de receita
             // Manda os parametros para a função cadastrarReceita de receitaService
-            receitaService.cadastraReceita(nome, ingredientes, modoDePreparo, nomeImg, clienteLogado);          
+            receitaService.cadastraReceita(nome, modoDePreparo, ingredientes, nomeImg, clienteLogado);          
             
             // Printar todas as receitar do BD no console
             receitaService.printarReceitas(receitaService.retornarReceitasDoCliente(clienteLogado));
+            
             // Preencher a string aux com o conteudo do HTML
+            html = htmlText("yourRecipes.html");
             html = receitaService.replaceYourRecipes(html, clienteLogado);
+            
             return html;       
         });
         
-        post("/cadastra-cliente", (request, response) -> {
-        	
+        post("/cadastra-cliente", (request, response) -> {       	
         	        	
             // Obtém os parâmetros da requisição
             String nome = request.queryParams("nome");

@@ -26,8 +26,6 @@ main .featureText {
 }
 
 
-
-
 /* CSS para as Receitas Destaques */
 main .secondStage{
     background-color: #dbdbdb;
@@ -54,6 +52,7 @@ main .thirdStage{
 main .secondBoxFormat {
     font-family: 'Josefin Sans', sans-serif;
 }
+
 .grid-container {
     display: flex;
     flex-wrap: wrap;

@@ -4,13 +4,16 @@ import java.util.List;
 import java.util.Collections;
 
 import dao.ClienteDAO;
+import dao.IngredienteDAO;
 import dao.ReceitaDAO;
 import model.Cliente;
+import model.Ingrediente;
 import model.Receita;
 
 public class ReceitaService {
     public ReceitaDAO receitaDAO;
     public ClienteDAO clienteDAO;
+    public static IngredienteDAO ingredienteDAO = new IngredienteDAO();
     public static ClienteService clienteService = new ClienteService();
 
     public ReceitaService() {
@@ -216,6 +219,7 @@ public class ReceitaService {
 		html = html.replace("Nome da receita", receita.getNome());
 		html = html.replace("Nome dos ingredientes",  receita.getIngredientes());
 		html = html.replace("Seu modo de preparo", receita.getModoDePreparo());	
+		//html = html.replace("imgReceitaEscolhida", receita.getImagem());
 		
 		// Printar o nome do usuario
     	String nomeUsuario = new String();
@@ -223,10 +227,30 @@ public class ReceitaService {
         // Editar o front end com o Java
         nomeUsuario = nomeUsuario.replace("SeuNome", nome);
         html = html.replace("<NomeUsuario>", nomeUsuario);
+        
+        String[] array = receita.getIngredientes().split(", ");
+        float total = 0;
+        
+        List<Ingrediente> listaIngrediente = ingredienteDAO.listarIngredientes();
+        
+        // Percorrer a lista de todos os ingredientes
+        for ( Ingrediente aux : listaIngrediente ) {
+        	// Percorrer lista de ingredientes desejados
+        	for ( String ver : array ) {
+        		if ( (aux.getNome().toLowerCase()).compareTo(ver.toLowerCase()) == 0 ) {
+        			total = total + aux.getPreco();
+        		}
+        	}
+        }
 		
+        
+        html = html.replace("totalPreco", Float.toString(total));
 		// Retorna a string com o HTML
+        
 		return html;
 	}
+	
+	
 	
     // Retornar a Receita em formato de instancia
     public Receita procurarReceita(String nome) {
@@ -406,5 +430,61 @@ public class ReceitaService {
         // Retorna a string com o HTML
         return html;
     }
+
+	public String replaceRecipesHome(String html) {
+		
+			String receita = new String();
+			String novaDiv = new String();
+	        
+			// Lista com todas as receitas do BD para pesquisa
+	    	List<Receita> todasReceitas = retornarTodasReceitas();
+			
+	        // sortear para os destaques
+	    	Collections.shuffle(todasReceitas);
+	    	
+	    	// verificar se tem menos de 4 
+	    	int loop = todasReceitas.size();
+	    	loop = loop > 4 ? 4 : loop;
+	    	loop--;
+	    	
+	    	// loop para retornar as 4 ultimas receitas
+	    	int pos = 0;
+	    	
+	    	// Editar as receitas destaques
+	    	while ( loop >= 0 ) {
+	    		
+	    		// codigo
+	            receita = "<div class=\"card\" style=\"width: 18rem; margin: 10px;\">\r\n"
+ 		    		+ "<img src=\"img/"+ todasReceitas.get(pos).imagem +"\" class=\"card-img-top\" alt=\"..\" style=\"height: 16rem; width: 100%;\">\r\n" + "<div class=\"card-body\">\r\n"
+	             		+ "<h5 class=\"card-title\">Nome da receita</h5>\r\n"
+	             		+ "<p class=\"card-text\">cliente</p>\r\n" 
+	             		//<!-- Formulário que envia o nome da receita -->
+	             		+ "<form action=\"/ver-receita\" method=\"post\" id=\"viewRecipeForm\">"
+	                    + "<input type=\"hidden\" name=\"recipeName\" value=\"Nome da receita\">"
+	             		+ "<button type=\"submit\" class=\"btn btn-primary\" data-bs-toggle=\"modal\" data-bs-target=\"#recipeModal\">Ver Receita</button>\r\n"
+	             		+ "</div>\r\n"
+	             		+ "</form>"
+	             		+ "</div>";
+	            
+	            Cliente aux = new Cliente();
+	            aux = clienteService.clientePorId(todasReceitas.get(pos).getIdCliente());
+	    		
+	    		// Editar a receita
+	    		receita = receita.replace("Nome da receita", todasReceitas.get(pos).getNome());
+	    		receita = receita.replace("cliente", aux.getNome());
+	    		//receita = receita.replace("Seu modo de preparo", todasReceitas.get(pos).getModoDePreparo());
+	    		
+	    		// Concatenar varias Divs
+	    		novaDiv = novaDiv + receita;
+	    	  		
+	    		loop--;
+	    		pos++;
+	    	}
+	    	
+	        // Editar o front end com o Java
+	        html = html.replace("<DestaquesReceitas>", novaDiv);
+	        
+		return html;
+	}
 
 }  
