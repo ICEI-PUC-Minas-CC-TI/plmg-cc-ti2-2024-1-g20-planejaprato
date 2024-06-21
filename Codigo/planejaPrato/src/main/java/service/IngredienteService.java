@@ -40,7 +40,7 @@ public class IngredienteService {
     	 for ( int i = 0; i < todosIngredientes.size(); i++ ) {
     		// Criar a string com a Div
              ingrediente =  "<label><input type=\"checkbox\" name=\"ingredientes\" value=oping>  oping  <input type=\"number\" name=\"quantidade\" value=\"0\" min=\"0\"></label><br>\r\n";
-             System.out.println(todosIngredientes.get(i).getNome());
+             //System.out.println(todosIngredientes.get(i).getNome());
  		    
              // Editar a receita
              ingrediente = ingrediente.replace("oping", todosIngredientes.get(i).getNome());             
@@ -49,8 +49,7 @@ public class IngredienteService {
             }
              
              // Editar o front end com o Java
-             html = html.replace("<ingredientesSub>", novaDiv);
-             
+             html = html.replace("<ingredientesSub>", novaDiv);        
              
              // Retorna a string como HTML
              return html;

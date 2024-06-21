@@ -1,5 +1,6 @@
 package dao;
 
+import java.beans.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -101,6 +102,40 @@ public class ClienteDAO extends DAO {
     	
         return cliente;
     }
+    
+    
+    /*
+    // Vulneravel ao SQL injection
+    public Cliente autenticarCliente(String email, String senhaCliente) {
+        Cliente cliente = new Cliente();
+        try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {
+            // Consulta SQL vulnerável a SQL Injection (apenas para fins educacionais)
+            String sql = "SELECT * FROM Cliente WHERE email = '" + email + "' AND senha = '" + senhaCliente + "'";
+            
+            // Utilizando PreparedStatement para simular a vulnerabilidade
+            PreparedStatement preparedStatement = connection.prepareStatement(sql);
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            if (resultSet.next()) {
+                cliente.setIdCliente(resultSet.getInt("idcliente"));
+                cliente.setEndereco(resultSet.getString("endereco"));
+                cliente.setEmail(resultSet.getString("email"));
+                cliente.setNumeroTelefone(resultSet.getString("telefone"));
+                cliente.setSenha(resultSet.getString("senha"));
+                cliente.setCidade(resultSet.getString("cidade"));
+                cliente.setCep(resultSet.getString("cep"));
+                cliente.setNome(resultSet.getString("nome"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return cliente;
+    }
+    */
+
+    
     public Cliente retornaClientePorId(int id) {
     	Cliente cliente = new Cliente();
     	try (Connection connection = DriverManager.getConnection(url, usuario, senha)) {

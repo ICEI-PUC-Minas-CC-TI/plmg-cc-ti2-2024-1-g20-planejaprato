@@ -235,14 +235,17 @@ public class ReceitaService {
         
         // Percorrer a lista de todos os ingredientes
         for ( Ingrediente aux : listaIngrediente ) {
+
         	// Percorrer lista de ingredientes desejados
         	for ( String ver : array ) {
-        		if ( (aux.getNome().toLowerCase()).compareTo(ver.toLowerCase()) == 0 ) {
-        			total = total + aux.getPreco();
+        		
+        		String[] teste = (ver.toLowerCase()).split("_");
+        		
+        		if ( (aux.getNome().toLowerCase()).compareTo(teste[0]) == 0 ) {
+        			total = total + aux.getPreco()*Integer.parseInt(teste[1]);
         		}
         	}
         }
-		
         
         html = html.replace("totalPreco", Float.toString(total));
 		// Retorna a string com o HTML

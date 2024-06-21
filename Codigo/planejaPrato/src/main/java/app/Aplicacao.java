@@ -95,6 +95,7 @@ public class Aplicacao {
         	
         	// Codigo para verificar se o cliente ta logado e retornar uma instancia com os dados deste cliente
         	Cliente clienteLogado =  request.session().attribute("usuarioLogado");
+        	
         	if (clienteLogado == null) {
                 response.redirect("/login.html");
                 return null;
@@ -106,7 +107,17 @@ public class Aplicacao {
             // Obtém os parâmetros da requisição
             String nome = request.queryParams("nome");
             String[] ingredientesChegada = request.queryParamsValues("ingredientes");
-            String ingredientes = String.join(", ", ingredientesChegada);     
+            String[] quantidade = request.queryParamsValues("quantidade");
+            
+            int j = 0;
+            for ( int i = 0; i < ingredientesChegada.length; i++ ) {
+            	while (quantidade[j].equals("0")) j++;
+	            	System.out.println(quantidade[j]);
+	            	ingredientesChegada[i] += "_" + quantidade[j];
+	            	System.out.println(ingredientesChegada[i]);
+            }
+            
+            String ingredientes = String.join(", ", ingredientesChegada);         
             
             String modoDePreparo = request.queryParams("modoDePreparo");  
             String nomeImg = client.createImages(nome + " receita culinaria");
@@ -162,6 +173,12 @@ public class Aplicacao {
             System.out.println("Nome: "+ nome +"\nEmail: " +email + "\nSenha: " + senha + "Endereco: "+endereco + "\nTelefone: "+ telefone + "\nCidade: "+cidade + "\nCep: "+cep);
             // Chama o serviço de cadastro de receita
             // Manda os parametros para a função cadastrarReceita de receitaService
+            
+            // Criptografia
+            char[] crip = senha.toCharArray();
+            for ( int i = 0; i < senha.length(); i++ ) crip[i] += i;
+            senha = new String(crip);
+            
             clienteService.cadastrarCliente(nome, senha, endereco, email, telefone, cidade, cep);          
             
             // Printar todas os usuarios do BD no console
@@ -177,7 +194,14 @@ public class Aplicacao {
             email = request.queryParams("email");
             senha = request.queryParams("senha");
             
-            //System.out.println("Email: "+ email+ "\nSenha: "+ senha);
+            System.out.println("Email: "+ email+ "\nSenha: "+ senha);
+            
+            // Criptografia tambem proteje contra o SQL injection
+            char[] crip = senha.toCharArray();
+            for ( int i = 0; i < senha.length(); i++ ) crip[i] += i;
+            senha = new String(crip);
+            
+            System.out.println("Email: "+ email+ "\nSenha: "+ senha);
             
             Cliente clienteLogado = clienteService.autenticarCliente(email, senha);
             
