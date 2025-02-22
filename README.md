@@ -6,7 +6,7 @@
 
 * [Edson Pimenta Almeida]
 * [Eduardo Nunes]
-* [Luis Augusto Staling Toledo]
+* [Luis Augusto Starling Toledo]
 * [Samuel ALves ]
 * [Rafael Lima]
 
